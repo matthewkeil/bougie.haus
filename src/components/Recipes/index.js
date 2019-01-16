@@ -1,3 +1,3 @@
-import {Recipes} from './Recipes';
+import Recipes from './Recipes.jsx';
 
 export default Recipes
