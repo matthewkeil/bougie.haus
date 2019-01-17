@@ -66,33 +66,37 @@ const Hero = ({hero}) => {
         return `${stringifyMonth(m)} ${stringifyDay(d)}, ${y}`;
     }
 
-    const Overlay = () => hero.image || hero.video
+    const Actions = () => (
+        <ul className={styles.actions}>
+            {actions.map((action, key) => (
+                <li key={key} className={styles.actionItem}>
+                    <Link to={action.url} className={styles.link}>{action.text}</Link>
+                </li>
+            ))}
+        </ul>
+    );
+
+    const Overlay = () => hero.image
         ? <div className={styles.overlay}>
-            <Link to="">
-                {hero.video
-                  ? <h1>this is where the video goes</h1>
-                  : <img src={hero.image.src} alt={!!hero.image.title ? hero.image.title : 'hero image'} className={styles.image}/>
-                }
-            </Link>
+                <Link to={`/recipes/${hero.shortid}`}>
+                    <img src={hero.image.src} alt={!!hero.image.title ? hero.image.title : 'hero image'} className={styles.image}/>
+                </Link>
+                <div className={styles.overlayActions}>
+                    <h2 className={styles.name}>{hero.name}</h2>
+                    <Actions />
+                </div>
         </div>
         : null;
 
     return (<article className={styles.card}>
-        {/* <Overlay /> */}
+        <Overlay />
         <div className={styles.content}>
             <span className={styles.date}>{getToday(hero.date)}</span>
-            <Link to="" style={{textDecoration: 'none'}}>
+            <Link to={`/recipes/${hero.shortid}`} style={{textDecoration: 'none'}}>
                 <h2 className={styles.name}>{hero.name}</h2>
             </Link>
             <span className={styles.description}>{hero.description}</span>
         </div>
-        <ul className={styles.actions}>
-        {actions.map((action, key) => (
-            <li key={key} className={styles.actionItem}>
-                <Link to={action.url} className={styles.link}>{action.text}</Link>
-            </li>
-        ))}
-        </ul>
     </article>);
 };
 

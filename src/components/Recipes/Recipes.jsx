@@ -28,7 +28,7 @@ class Recipes extends Component {
         slug: 'spiced milk tea from india',
         description: 'Masala chai is a delicately balanced tea that highlights the subtle complexities of Indian cuisine.  This creamy brew is perfumed with spicy cinnamon, floral cardamom and fragrant clove and anise that unite in your mouth in an explosion of flavor',
         image: {
-            src: 'https://cdn.bougie.haus/images/recipes/eD8Ds204/masala_chai.jpg',
+            src: 'https://motherwouldknow.com/wp-content/uploads/2017/04/2017-04-24-chai-madeleines-spices-and-tea-w-1.jpg',
             title: 'masala chai spices',
         },
         video: {},
