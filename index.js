@@ -1,0 +1,1 @@
+exports.graphqlBougieHaus = require('./api');
