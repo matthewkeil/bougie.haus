@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import {Link} from 'react-router-dom';
 
 import styles from './Hero.module.css';
@@ -66,14 +66,19 @@ const Hero = ({hero}) => {
         return `${stringifyMonth(m)} ${stringifyDay(d)}, ${y}`;
     }
 
-    const Actions = () => (
-        <ul className={styles.actions}>
-            {actions.map((action, key) => (
-                <li key={key} className={styles.actionItem}>
-                    <Link to={action.url} className={styles.link}>{action.text}</Link>
-                </li>
-            ))}
-        </ul>
+    const Actions = ({children}) => (
+        <Fragment>
+            {children}
+            <ul className={styles.actions}>
+                {actions.map((action, key) => (
+                    <li className={styles.actionItem}>
+                        <Link key={key} to={action.url} className={styles.link}>
+                            {action.text}
+                        </Link>
+                    </li>
+                ))}
+            </ul>
+        </Fragment>
     );
 
     const Overlay = () => hero.image
@@ -82,8 +87,9 @@ const Hero = ({hero}) => {
                     <img src={hero.image.src} alt={!!hero.image.title ? hero.image.title : 'hero image'} className={styles.image}/>
                 </Link>
                 <div className={styles.overlayActions}>
-                    <h2 className={styles.name}>{hero.name}</h2>
-                    <Actions />
+                    <Actions>
+                        <h3>{hero.name}</h3>
+                    </Actions>
                 </div>
         </div>
         : null;

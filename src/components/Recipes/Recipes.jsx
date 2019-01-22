@@ -36,27 +36,29 @@ class Recipes extends Component {
             ingredients: [],
             process: []
         }]
-    },{
-        shortid: 'eD8Dsew4',
-        name: 'Masala Chai',
-        slug: 'spiced milk tea from india',
-        description: 'Masala chai is a delicately balanced tea that highlights the subtle complexities of Indian cuisine.  This creamy brew is perfumed with spicy cinnamon, floral cardamom and fragrant clove and anise that unite in your mouth in an explosion of flavor',
-        picture: 'url',
-        versions: [{
-            ingredients: [],
-            process: []
-        }]
-    },{
-        shortid: 'eDds8s20',
-        name: 'Masal Chai',
-        slug: 'spiced milk tea from india',
-        description: 'Masala chai is a delicately balanced tea that highlights the subtle complexities of Indian cuisine.  This creamy brew is perfumed with spicy cinnamon, floral cardamom and fragrant clove and anise that unite in your mouth in an explosion of flavor',
-        picture: 'url',
-        versions: [{
-            ingredients: [],
-            process: []
-        }]
-    }];
+    }
+    // ,{
+    //     shortid: 'eD8Dsew4',
+    //     name: 'Masala Chai',
+    //     slug: 'spiced milk tea from india',
+    //     description: 'Masala chai is a delicately balanced tea that highlights the subtle complexities of Indian cuisine.  This creamy brew is perfumed with spicy cinnamon, floral cardamom and fragrant clove and anise that unite in your mouth in an explosion of flavor',
+    //     picture: 'url',
+    //     versions: [{
+    //         ingredients: [],
+    //         process: []
+    //     }]
+    // },{
+    //     shortid: 'eDds8s20',
+    //     name: 'Masal Chai',
+    //     slug: 'spiced milk tea from india',
+    //     description: 'Masala chai is a delicately balanced tea that highlights the subtle complexities of Indian cuisine.  This creamy brew is perfumed with spicy cinnamon, floral cardamom and fragrant clove and anise that unite in your mouth in an explosion of flavor',
+    //     picture: 'url',
+    //     versions: [{
+    //         ingredients: [],
+    //         process: []
+    //     }]
+    // }
+];
 
     render() {
     
