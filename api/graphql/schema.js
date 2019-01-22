@@ -1,11 +1,8 @@
-import { generate }from 'shortid';
-import * as bcrypt from 'bcrypt';
-import * as jwt from 'jsonwebtoken';
-import { Context } from "./graphql";
+const { generate } = require('shortid');
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 
-// import {gql} from 'apollo-server';
-
-export const typeDefs = `
+exports.typeDefs = `
 type User {
   id: ID!
   email: String!
@@ -22,7 +19,7 @@ type Mutation {
 }
 `;
 
-export const resolvers = {
+exports.resolvers = {
   Mutation: {
     async Login(_, {email, password}, {driver}) {
       try {
@@ -97,7 +94,7 @@ export const resolvers = {
         `, { id, email, hash, token }); 
 
         if (saveResult.records[0].has('token')) {
-          return (saveResult.records[0].toObject() as any).token
+          return (saveResult.records[0].toObject()).token
         }
         
         console.error(saveResult);
@@ -118,7 +115,7 @@ export const resolvers = {
           RETURN user.admin as admin
         `, {admin});
 
-        if (!(isAdmin.records[0].toObject() as any).admin) {
+        if (!(isAdmin.records[0].toObject()).admin) {
           return new Error(`you dont have permission to make ${email} and admin`);
         }
 

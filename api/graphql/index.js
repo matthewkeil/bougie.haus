@@ -1,7 +1,8 @@
-import { typeDefs, resolvers } from '../schema';
+const { typeDefs, resolvers } = require('./schema');
 
+exports.schema = {};
 
-export const context = async ({request}) => {
+exports.context = async ({request}) => {
   let user;
 
   if (request.headers.authorization) {
