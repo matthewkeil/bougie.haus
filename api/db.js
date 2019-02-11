@@ -1,11 +1,17 @@
 const mongoose = require('mongoose');
 
-const db = mongoose.createConnection(process.env.NODE_ENV === 'development'
-    ? 'mongodb://DevServer:BougieHaus1!@ds145289.mlab.com:45289/bougie-haus'
-    : process.env.DB_URI);
+const username = process.env.MONGO_USERNAME || 'DevServer';
+const password = process.env.MONGO_PASSWORD || 'BougieHaus1!';
+const host = process.env.MONGO_HOST || 'ds251588.mlab.com'
+const port = process.env.MONGO_PORT || 51588;
+const dbName = process.env.MONGO_DBNAME || 'dev-bougie-haus'
+
+const uri = `mongodb://${username}:${password}@${host}:${port}/${dbName}`;
+
+const db = mongoose.createConnection(uri);
 
 db.on('error', (err) => console.error('connection error: ' + err));
 
-db.on('open', () => console.log('connected to db at ' + process.env.DB_URI));
+db.on('open', () => console.error(`connected to mongodb://${host}:${port}/${dbName}`));
 
 module.exports = db;

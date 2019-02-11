@@ -2,20 +2,34 @@
   "name": "bougie.haus",
   "version": "0.1.0",
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "client:start": "react-scripts start",
+    "client:build": "react-scripts build",
+    "client:test": "react-scripts test",
+    "client:eject": "react-scripts eject",
+    "api:start": "node_modules/.bin/nodemon api",
+    "api:deploy": "gcloud functions deploy api_bougie_haus --trigger-http --runtime=nodejs8 --memory=128MB --entry-point=apiBougieHaus"
   },
+  "engines": {
+    "node": "8.15.0"
+  },
+  "nodemonConfig": {
+    "delay": 1000,
+    "watch": "api",
+    "ignore": "node_modules"
+  },
+  "engineStrict": true,
   "dependencies": {
     "@material-ui/core": "^3.8.3",
     "@material-ui/icons": "^3.0.2",
-    "apollo-server": "^2.3.1",
-    "apollo-server-cloud-functions": "^2.3.1",
     "bcrypt": "^3.0.3",
-    "graphql": "^14.1.1",
+    "compression": "^1.7.3",
+    "cors": "^2.8.5",
+    "express": "4.16.3",
+    "helmet": "^3.15.1",
     "jsonwebtoken": "^8.4.0",
     "mongoose": "^5.4.5",
+    "morgan": "^1.9.1",
+    "nodemon": "^1.18.10",
     "prop-types": "^15.6.2",
     "react": "^16.7.0",
     "react-dom": "^16.7.0",
