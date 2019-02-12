@@ -1,5 +1,3 @@
-const db = require('./db');
-
 const express = require('express');
 const helmet = require('helmet');
 const cors = require('cors');
@@ -30,7 +28,8 @@ if (PROD) {
     api.use(compression());    
 }
 
-api.use('*', (req, res, next) => {
+api.use('*', async (req, res, next) => {
+  await 
   res.send(db.name);
 })
 
