@@ -2,6 +2,8 @@ const express = require('express');
 const helmet = require('helmet');
 const cors = require('cors');
 const compression = require('compression')
+
+const db = require('./db')
 const router = require('./router');
 
 const PROD = process.env.NODE_ENV === 'production';
@@ -28,9 +30,9 @@ if (PROD) {
     api.use(compression());    
 }
 
-api.use('*', async (req, res, next) => {
-  await 
-  res.send(db.name);
-})
+api.use('*', async (_, res, next) => {
+  await db(res);
+  next();
+});
 
 module.exports = api;
