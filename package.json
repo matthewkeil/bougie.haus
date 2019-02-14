@@ -2,6 +2,7 @@
   "name": "bougie.haus",
   "version": "0.1.0",
   "scripts": {
+    "start": "npm run client:start & npm run api:start",
     "client:start": "react-scripts start",
     "client:build": "react-scripts build",
     "client:test": "react-scripts test",
@@ -14,6 +15,7 @@
   },
   "nodemonConfig": {
     "delay": 1000,
+    "exec": "node api/devServer.js",
     "watch": "api",
     "ignore": "node_modules"
   },

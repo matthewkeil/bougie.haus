@@ -7,7 +7,8 @@ import Paper from '@material-ui/core/Paper';
 
 import './App.css';
 
-import {Recipes} from './components';
+import {RecipeList} from './components';
+import {NewRecipe} from './components';
 
 
 const styles = theme => ({
@@ -41,7 +42,9 @@ class App extends Component {
           <Paper className={classes.paper}>
             <Router class="App-content">
               <Fragment>
-                <Route path="/" exact component={Recipes} />
+                <Route path="/recipes" component={RecipeList} />
+                <Route path="/recipes/new" component={NewRecipe} />
+                <Route path="/recipes/:name" component={RecipeList} />
               </Fragment>
             </Router>
           </Paper>
