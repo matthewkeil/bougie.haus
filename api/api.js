@@ -34,7 +34,7 @@ if (PROD) {
   api.use(bodyParser.urlencoded({ extended: false }))
 }
 
-api.use('*', async (_, res, next) => {
+api.use('*', async (req, res, next) => {
   await db(res);
   next();
 });

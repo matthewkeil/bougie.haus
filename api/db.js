@@ -8,11 +8,13 @@ const dbName = process.env.MONGO_DBNAME || 'dev-bougie-haus'
 
 const uri = `mongodb://${username}:${password}@${host}:${port}/${dbName}`;
 
-mongoose.connection.on('error', (err) => console.error('connection error: ' + err));
+
+mongoose.connection.on('error', (err) => console.error('connection error: ' + err));    
 
 mongoose.connection.on('open', () => console.error(`connected to mongodb://${host}:${port}/${dbName}`));
 
 module.exports = (res) => {
+
     res.on('close', () => {
         console.log('closing mongodb connection');
         mongoose.connection.close();

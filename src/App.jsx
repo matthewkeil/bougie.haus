@@ -3,52 +3,56 @@ import { BrowserRouter as Router, Route } from 'react-router-dom';
 
 import { withStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import Paper from '@material-ui/core/Paper';
 
 import './App.css';
 
-import {RecipeList} from './components';
-import {NewRecipe} from './components';
-
+import {AppBar} from './components/shared';
+import {Home, Register, Login, RecipeList, NewRecipe} from './components';
 
 const styles = theme => ({
   container: {
     position: 'absolute',
+    paddingTop: '50px',
     top: 0,
     left: 0,
     width: '100%',
     height: '100%',
-    backgroundColor: theme.palette.primary.dark
-  },
-  paper: {
-    backgroundColor: 'rgba(255, 255, 255, .85)',
-    position: 'relative',
-    width: '100%',
-    margin: '0 auto',
-    [theme.breakpoints.up('xs')]: {
-      maxWidth: '72rem',
-      width: 'calc(100% - 4rem)'
+    backgroundColor: theme.palette.primary.dark,
+    [theme.breakpoints.up('sm')]: {
+      paddingTop: '65px'
     }
   }
 });
 
 class App extends Component {
+
+  state = {
+    user: {
+      id: 'eoiuhy892hntgkjfng'
+    }
+  };
+  
   render() {
+    
     const { classes } = this.props;
+    const { user } = this.state;
+
     return (
       <Fragment>
         <CssBaseline />
-        <div className={classes.container}>
-          <Paper className={classes.paper}>
-            <Router class="App-content">
-              <Fragment>
-                <Route path="/recipes" component={RecipeList} />
-                <Route path="/recipes/new" component={NewRecipe} />
-                <Route path="/recipes/:name" component={RecipeList} />
-              </Fragment>
-            </Router>
-          </Paper>
-        </div>
+        <Router class="App-content">
+          <div className={classes.container}>
+            <AppBar user={user}></AppBar>
+            <Fragment>
+              <Route path="/" exact component={Home} />
+              <Route path="/users/register" component={Register} />
+              <Route path="/users/login" component={Login} />
+              <Route path="/recipes" component={RecipeList} />
+              <Route path="/recipes/new" component={NewRecipe} />
+              <Route path="/recipes/:name" component={RecipeList} />
+            </Fragment>
+          </div>
+        </Router>
       </Fragment>
     );
   }
