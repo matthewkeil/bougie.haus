@@ -18,14 +18,17 @@ const router = Router();
 
 router.post('/users/register', async (req, res, next) => {
 
-    const email = req.body.email;
+    const email = verifyEmail(req.body.email);
     const password = req.body.password;
 
+    if (!email || password === '') {
+        return res.json({error: 'invalid email or password'});
+    }
+    
     let user = await User.findOne({email});
 
     if (user) {
-        res.json(JSON.stringify({error: 'email already in use'}));
-        next();
+        return res.json({error: 'email already in use'});
     }
 
     user = new User({email, password})
