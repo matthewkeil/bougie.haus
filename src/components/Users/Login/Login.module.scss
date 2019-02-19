@@ -1,0 +1,97 @@
+@import '../../../index.module.scss';
+
+.logo {
+    display: block;
+    width: 40%;
+    max-width: 16rem;
+    margin: 0 auto;
+    padding-top: 15%;
+}
+
+.paper {
+    color: $primary-dark;
+    background-color: white;
+    position: relative;
+    width: 92vw;
+    max-width: 32rem;
+    margin-top: 4vw;
+    margin-left: auto;
+    margin-right: auto;
+    padding-bottom: 1rem;
+    padding-top: 2rem;
+    padding-left: 2rem;
+    padding-right: 2rem;
+    text-align: center;
+}
+
+.input {
+    margin-top: .5rem;
+}
+
+.forgot {
+    display: block;
+    text-align: right;
+}
+
+.link {
+    text-decoration: none;
+    padding-bottom: 1rem;
+}
+
+.register {
+    padding-left: 1.5rem;
+}
+
+.button {
+    color: white;
+    background-color: $secondary;
+    width: 100%;
+}
+
+.noAccount {
+    line-height: 1;
+    padding-top: 1.3rem;
+    padding-bottom: 1rem;
+}
+
+.spacerText {
+    display: flex;
+    line-height: 1rem;
+    width: 100%;
+}
+
+.spacerText::before, .spacerText::after {
+    content: "";
+    position: relative;
+    flex: 1;
+    height: inherit;
+    transform: translate(0, -50%);
+    border-bottom: 1px solid $secondary;
+}
+
+.spacerText::before {
+    margin-right: 1rem;
+}
+
+.spacerText::after {
+    margin-left: 1rem;
+}
+
+.icons {
+    display: flex;
+    width: 100%;
+    border-bottom: 1px solid $secondary;
+    padding-bottom: .2rem;
+}
+
+.iconContainer {
+    flex-grow: 1;
+    padding: 2rem 1rem;
+}
+
+.icon {
+    display: block;
+    height: 30px;
+    margin: 0 auto;
+    color: $primary-dark;
+}

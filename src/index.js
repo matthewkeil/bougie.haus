@@ -1,41 +1,25 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import * as serviceWorker from './serviceWorker';
-import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+import React from "react";
+import ReactDOM from "react-dom";
+import * as serviceWorker from "./serviceWorker";
 
-const theme = createMuiTheme({
-    typography: {
-      useNextVariants: true
-    },
-    breakpoints: {
-      values: {
-        xs: 480,
-        sm: 736
-      }
-    },
-    palette: {
-      primary: {
-        light: '#803ad8',
-        main: '#3b1051',
-        dark: '#260d4c' 
-      },
-      secondary: {
-        main: '#96ab1e',
-        dark: '#697815'
-      },
-      error: {
-        main: '#f09e2a'
-      }
-    }
+import App from "./App";
+import './index.module.scss';
+
+import JssProvider from 'react-jss/lib/JssProvider';
+import { create } from 'jss';
+import { createGenerateClassName, jssPreset } from "@material-ui/core/styles";
+
+const generateClassName = createGenerateClassName();
+const jss = create({
+  ...jssPreset(),
+  insertionPoint: document.getElementById('material-ui-insertion')
 });
 
 ReactDOM.render(
-    <MuiThemeProvider theme={theme}>
-        <App />
-    </MuiThemeProvider>
-    , document.getElementById('root')
+  <JssProvider jss={jss} generateClassName={generateClassName}>
+      <App />
+  </JssProvider>,
+  document.getElementById("root")
 );
 
 // If you want your app to work offline and load faster, you can change

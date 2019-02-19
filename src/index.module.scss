@@ -1,0 +1,46 @@
+
+$base: tan;
+
+$primary: #3b1051;
+$primary-dark: #260d4c;
+$primary-light: #803ad8;
+
+$secondary: #96ab1e;
+$secondary-dark: #697815;
+
+$accent: #f09e2a;
+
+
+$xs: 480px;
+$sm: 600px;
+$md: 960px;
+$lg: 1280px;
+$xl: 1920px;
+
+
+
+body {
+  line-height: 2.375;
+  font-size: 1rem;
+  color: $base;
+  background-color: $primary;
+  font-family: "Source Sans Pro", "Roboto", sans-serif;
+}
+
+@media (min-width: 361px) {
+  html {
+    font-size: 11pt;
+  }
+}
+
+@media (min-width: 981px) {
+  html {
+    font-size: 12pt;
+  }
+}
+
+@media (min-width: 1281px) {
+  html {
+    font-size: 16pt;
+  }
+}
