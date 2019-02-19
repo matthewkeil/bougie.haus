@@ -1,8 +1,9 @@
 import React, { Fragment, Component, createRef } from "react";
 import { Link } from "react-router-dom";
-import {connect} from 'react-redux';
+import { connect } from "react-redux";
+import { Field, reduxForm } from "redux-form";
 
-import ACT from '../../../store';
+import ACT from "../../../store/actions";
 
 import Paper from "@material-ui/core/Paper";
 import TextField from "@material-ui/core/TextField";
@@ -20,16 +21,16 @@ const socials = {
 };
 
 class Login extends Component {
-
   state = {
-    email: '',
-    password: ''
-  }
+    email: "",
+    password: ""
+  };
 
   constructor() {
     super(...arguments);
     this.emailRef = createRef();
     this.focusEmail = this.focusEmail.bind(this);
+    this.renderInput = this.renderInput.bind(this);
   }
 
   componentDidMount() {
@@ -37,15 +38,30 @@ class Login extends Component {
   }
 
   focusEmail() {
-    this.emailRef.current.focus();
+    this.emailRef.focus();
   }
 
   handleLogin(e) {
     e.preventDefault();
-    this.props.dispatch(ACT.attemptLogin({
-      email: this.state.email,
-      password: this.state.password
-    }));
+    this.props.dispatch(
+      ACT.user.attemptLogin()
+    );
+  }
+
+  renderInput({ input, label, meta: { touched, error }, ...custom }) {
+    return (
+      <TextField
+        fullWidth
+        className={styles.input}
+        inputRef={connectedRef => (this.emailRef = connectedRef)}
+        value={this.state.email}
+        // hintText={label}
+        // floatingLabelText={label}
+        // errorText={touched && error}
+        {...input}
+        {...custom}
+      />
+    );
   }
 
   render() {
@@ -58,12 +74,10 @@ class Login extends Component {
         />
         <Paper className={styles.paper} elevation={6}>
           <form>
-            <TextField
-              fullWidth
-              inputRef={this.emailRef}
-              className={styles.input}
-              value={this.state.email}
-              label="email"
+            <Field
+              // inputRef={this.emailRef}
+              name="email"
+              component={this.renderInput}
             />
             <TextField
               fullWidth
@@ -113,4 +127,8 @@ class Login extends Component {
   }
 }
 
-export default connect()(Login)
+export default connect()(
+  reduxForm({
+    form: "login"
+  })(Login)
+);

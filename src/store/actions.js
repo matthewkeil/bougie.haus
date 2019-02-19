@@ -1,11 +1,7 @@
+import user from './user.actions';
 
-export const ACTIONS = {
-    ATTEMPT_LOGIN: 'ATTEMPT_LOGIN'
-}
-
-export default {
-    attemptLogin: (payload) => ({
-        type: ACTIONS.ATTEMPT_LOGIN,
-        payload
-    })
+const ACT = {
+    user
 };
+
+export default ACT;

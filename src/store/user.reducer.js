@@ -1,4 +1,4 @@
-import {ACTIONS} from './actions';
+import {USER_ACTIONS as ACTIONS} from './user.actions';
 
 
 function attemptLogin(state, action) {
