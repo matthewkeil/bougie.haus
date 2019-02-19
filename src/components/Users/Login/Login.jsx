@@ -2,6 +2,8 @@ import React, { Fragment, Component, createRef } from "react";
 import { Link } from "react-router-dom";
 import {connect} from 'react-redux';
 
+import ACT from '../../../store';
+
 import Paper from "@material-ui/core/Paper";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
@@ -18,11 +20,16 @@ const socials = {
 };
 
 class Login extends Component {
-  constructor({login}) {
+
+  state = {
+    email: '',
+    password: ''
+  }
+
+  constructor() {
     super(...arguments);
     this.emailRef = createRef();
     this.focusEmail = this.focusEmail.bind(this);
-    this.login = login;
   }
 
   componentDidMount() {
@@ -33,9 +40,12 @@ class Login extends Component {
     this.emailRef.current.focus();
   }
 
-  login(e) {
+  handleLogin(e) {
     e.preventDefault();
-    this.login();
+    this.props.dispatch(ACT.attemptLogin({
+      email: this.state.email,
+      password: this.state.password
+    }));
   }
 
   render() {
@@ -49,20 +59,18 @@ class Login extends Component {
         <Paper className={styles.paper} elevation={6}>
           <form>
             <TextField
-              inputRef={this.emailRef}
               fullWidth
+              inputRef={this.emailRef}
               className={styles.input}
-              id="email"
+              value={this.state.email}
               label="email"
-              required
             />
             <TextField
               fullWidth
               type="password"
               className={styles.input}
-              id="password"
+              value={this.state.password}
               label="password"
-              required
             />
             <Link
               className={`${styles.forgot} ${styles.link}`}
@@ -74,7 +82,7 @@ class Login extends Component {
               type="submit"
               className={styles.button}
               variant="contained"
-              onClick={this.login}
+              onClick={this.handleLogin.bind(this)}
             >
               LOG IN
             </Button>
@@ -105,10 +113,4 @@ class Login extends Component {
   }
 }
 
-function mapDispatchToProps(dispatch) {
-  return {
-    login: (email, password) => dispatch({type: 'booger'})
-  }
-}
-
-export default connect(() => ({}), mapDispatchToProps)(Login)
+export default connect()(Login)
