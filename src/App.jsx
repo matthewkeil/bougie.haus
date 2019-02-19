@@ -1,10 +1,14 @@
-import React, { Component, Fragment } from 'react';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import React, { Component } from 'react';
+import { Route } from 'react-router-dom';
 
 import styles from './App.module.scss';
 
-import {Home, Register, Login, RecipeList, NewRecipe} from './components';
+import {Home, Register, Login} from './components';
 
+
+function login() {
+  console.log('hello there');
+}
 export default class App extends Component {
 
   state = {
@@ -15,21 +19,17 @@ export default class App extends Component {
   
   render() {
     
-    const { user } = this.state;
+    // const { user } = this.state;
 
     return (
-      <Fragment>
-        <Router class="App-content">
-          <div className={styles.container}>
-            <Route path="/" exact component={Home} />
-            <Route path="/users/register" component={Register} />
-            <Route path="/users/login" component={Login} />
-            {/* <Route path="/recipes" component={RecipeList} />
-            <Route path="/recipes/new" component={NewRecipe} />
-            <Route path="/recipes/:name" component={RecipeList} /> */}
-          </div>
-        </Router>
-      </Fragment>
+      <div className={styles.container}>
+        <Route path="/" exact component={Home} />
+        <Route path="/users/register" component={Register} />
+        <Route path="/users/login" render={() => <Login login={login} />} />
+        {/* <Route path="/recipes" component={RecipeList} />
+        <Route path="/recipes/new" component={NewRecipe} />
+        <Route path="/recipes/:name" component={RecipeList} /> */}
+      </div>
     );
   }
 }
