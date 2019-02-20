@@ -2,11 +2,10 @@ import {USER_ACTIONS as ACTIONS} from './user.actions';
 
 
 function attemptLogin(state, action) {
-    const newState = {...state};
+    const {email, password} = action;
 
-    console.log(action.payload);
-    
-    return newState
+    console.log(email, password)
+    return {...state}//, user: {email, password}}
 }
 
 
