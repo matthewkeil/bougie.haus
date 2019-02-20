@@ -5,7 +5,7 @@ const express = require('express');
 
 const api = express();
 const db = require('./db')
-const router = require('./router');
+const userRouter = require('./userRouter');
 
 const PROD = process.env.NODE_ENV === 'production';
 
@@ -38,6 +38,11 @@ api.use('*', async (req, res, next) => {
   next();
 });
 
-api.use(router);
+api.use('/users', userRouter);
+
+api.use((err, req, res, next) => {
+  console.error(">>>> error handler", err);
+  return res.json({error: err.message})
+})
 
 module.exports = api;

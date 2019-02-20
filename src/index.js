@@ -2,15 +2,15 @@ import React from "react";
 import ReactDOM from "react-dom";
 import * as serviceWorker from "./serviceWorker";
 
-import configureStore from './store/configureStore';
-import { Provider } from 'react-redux';
-
 import JssProvider from 'react-jss/lib/JssProvider';
 import { create } from 'jss';
 import { createGenerateClassName, jssPreset } from "@material-ui/core/styles";
 
-import { BrowserRouter as Router } from 'react-router-dom';
-import createHistory from 'history/createBrowserHistory';
+import { createBrowserHistory } from 'history';
+import { ConnectedRouter } from 'connected-react-router';
+
+import configureStore from './store';
+import { Provider } from 'react-redux';
 
 import App from "./App";
 import './index.module.scss';
@@ -23,16 +23,16 @@ const jss = create({
 
 const generateClassName = createGenerateClassName();
 
-const history = createHistory();
+const history = createBrowserHistory();
 
 const store = configureStore(history);
 
 ReactDOM.render(
   <Provider store={store}>
     <JssProvider jss={jss} generateClassName={generateClassName}>
-      <Router>
+      <ConnectedRouter history={history}>
         <App />
-      </Router>
+      </ConnectedRouter>
     </JssProvider>
   </Provider>,
   document.getElementById("root")
