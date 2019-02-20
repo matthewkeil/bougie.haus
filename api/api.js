@@ -9,7 +9,6 @@ const router = require('./router');
 
 const PROD = process.env.NODE_ENV === 'production';
 
-
 api.use(helmet());
 api.options('*', cors());
 api.use(cors({
@@ -30,7 +29,7 @@ if (PROD) {
     api.use(compression());    
 } else {
   const bodyParser = require('body-parser');
-  // api.use(bodyParser.json());
+  api.use(bodyParser.json());
   api.use(bodyParser.urlencoded({ extended: false }))
 }
 

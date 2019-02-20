@@ -7,7 +7,7 @@ const UserSchema = new Schema({
   email: {
     type: String,
     required: true,
-    index: { unique: true }
+    unique: true
   },
   password: {
     type: String,
@@ -34,9 +34,5 @@ UserSchema.pre("save", async function(next) {
 });
 
 const User =  mongoose.model("User", UserSchema);
-
-User.prototype.checkPassword = function(password) {
-  return bcrypt.compare(password, this.password)
-};
 
 module.exports = User;

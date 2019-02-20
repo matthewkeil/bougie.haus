@@ -25,5 +25,5 @@ module.exports = (res) => {
         mongoose.connection.close();
     });
     
-    return mongoose.connect(uri)
+    return mongoose.connect(uri, { useNewUrlParser: true })
 };

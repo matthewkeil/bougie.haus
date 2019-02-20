@@ -1,16 +1,30 @@
-const ATTEMPT_LOGIN = 'ATTEMPT_LOGIN';
+import axios from "axios";
+
+const API_URL = process.env.API_URL || "http://localhost:4000";
+
+const LOGIN = "LOGIN";
 
 const ACTIONS = {
-    ATTEMPT_LOGIN
-}
-
-const userActionCreators = {
-    attemptLogin: (email, password) => ({
-        type: ACTIONS.ATTEMPT_LOGIN,
-        email,
-        password
-    })
+  LOGIN
 };
 
-export {ACTIONS as USER_ACTIONS};
+const userActionCreators = {
+  attemptLogin: (email, password) => dispatch =>
+    axios
+      .post(`${API_URL}/users/login`, {
+        email,
+        password
+      })
+      .then(
+        ({ data }) => {
+          dispatch({
+            type: ACTIONS.LOGIN,
+            user: data
+          });
+        },
+        err => console.error(err)
+      )
+};
+
+export { ACTIONS as USER_ACTIONS };
 export default userActionCreators;
