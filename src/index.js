@@ -10,18 +10,22 @@ import { create } from 'jss';
 import { createGenerateClassName, jssPreset } from "@material-ui/core/styles";
 
 import { BrowserRouter as Router } from 'react-router-dom';
+import createHistory from 'history/createBrowserHistory';
 
 import App from "./App";
 import './index.module.scss';
 
 
-const store = configureStore();
-
-const generateClassName = createGenerateClassName();
 const jss = create({
   ...jssPreset(),
   insertionPoint: document.getElementById('material-ui-insertion')
 });
+
+const generateClassName = createGenerateClassName();
+
+const history = createHistory();
+
+const store = configureStore(history);
 
 ReactDOM.render(
   <Provider store={store}>
