@@ -29,12 +29,10 @@ UserSchema.pre("save", async function(next) {
 
     user.password = hash;
 
-    user.updateToken();
-
     next();
     
   } catch (err) {
-    next(err);
+    console.log(err);
   }
 });
 
@@ -48,13 +46,10 @@ UserSchema.methods.hasValidToken = function() {
     : false;
 }
 
-UserSchema.methods.updateToken = async function(id) {
- 
-  if (this.token) this.tokens.push(this.token);
- 
-  this.token = await jwt.sign({id}, JWT_SECRET);
-  
-  return this.token 
+UserSchema.methods.updateToken = async function() {
+    if (this.token) this.tokens.push(this.token);
+   
+    this.token = await jwt.sign({_id: this._id}, JWT_SECRET);
 }
 
 const User =  mongoose.model("User", UserSchema);

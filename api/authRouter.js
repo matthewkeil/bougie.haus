@@ -1,9 +1,8 @@
 const passport = require("./passport");
 const Router = require("express").Router;
-const userRouter = Router();
+const authRouter = Router();
 
 const handlePassportResponse = (req, res, next) => (err, user, info) => {
-
   if (err instanceof Error) {
     return next(err);
   }
@@ -23,10 +22,10 @@ const handlePassportResponse = (req, res, next) => (err, user, info) => {
     });
   }
 
-  return next(new Error('unknown auth error'))
+  return next(new Error("unknown auth error"));
 };
 
-userRouter.post("/login", async (req, res, next) => {
+authRouter.post("/login", async (req, res, next) => {
   passport.authenticate("local", handlePassportResponse(req, res, next))(
     req,
     res,
@@ -34,7 +33,7 @@ userRouter.post("/login", async (req, res, next) => {
   );
 });
 
-userRouter.post("/register", async (req, res, next) => {
+authRouter.post("/register", async (req, res, next) => {
   passport.authenticate("register", handlePassportResponse(req, res, next))(
     req,
     res,
@@ -42,23 +41,22 @@ userRouter.post("/register", async (req, res, next) => {
   );
 });
 
-// userRouter.get(
-//   "/users/login/google",
-//   passport.authenticate("google", {
-//     scope: [
-//       "https://www.googleapis.com/auth/userinfo.email",
-//       "https://www.googleapis.com/auth/userinfo.profile"
-//     ]
-//   })
-// );
+authRouter.get(
+  "/auth/login/google",
+  passport.authenticate("google", {
+    scope: ["profile"]
+  })
+);
 
-// userRouter.get(
-//   "/users/login/google/callback",
-//   passport.authenticate("google", {
-//     successRedirect: "/",
-//     failureRedirect: "/login",
-//     failureFlash: true
-//   })
-// );
+authRouter.get("/auth/login/google/callback", async (req, res, next) => {
+  passport.authenticate("google", {
+    failureRedirect: "/login`"
+  }, handlePassportResponse(req, res, next))(req, res, next)
+});
 
-module.exports = userRouter;
+authRouter.get('/logout', (req, res) => {
+  req.logout();
+  res.redirect("/");
+});
+
+module.exports = authRouter;

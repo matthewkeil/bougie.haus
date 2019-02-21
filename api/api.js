@@ -2,14 +2,19 @@ const helmet = require('helmet');
 const cors = require('cors');
 const compression = require('compression')
 const express = require('express');
+const session = require("express-session");
+const MongoStore = require('connect-mongo')(session);
 
 const api = express();
-const db = require('./db')
-const userRouter = require('./userRouter');
+const db = require('./db');
+const passport = require('./passport');
+const authRouter = require('./authRouter');
 
 const PROD = process.env.NODE_ENV === 'production';
+const SESSION_SECRET = process.env.SESSION_SECRET || 'very_bad-$ession$ecret';
 
 api.use(helmet());
+
 api.options('*', cors());
 api.use(cors({
     origin: PROD ? /https.*bougie\.haus$/ : /localhost/,
@@ -25,6 +30,18 @@ api.use(cors({
     ]
 }));
 
+api.use(session({
+  secret: SESSION_SECRET,
+  resave: true,
+  saveUninitialized: true,
+  store: new MongoStore({
+    mongooseConnection: db
+  })
+}));
+
+api.use(passport.initialize());
+api.use(passport.session());
+
 if (PROD) {
     api.use(compression());    
 } else {
@@ -33,12 +50,7 @@ if (PROD) {
   api.use(bodyParser.urlencoded({ extended: false }))
 }
 
-api.use('*', async (req, res, next) => {
-  await db(res);
-  next();
-});
-
-api.use('/users', userRouter);
+api.use('/auth', authRouter);
 
 api.use((err, req, res, next) => {
   console.error(">>>> error handler", err);
