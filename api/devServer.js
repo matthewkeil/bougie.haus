@@ -1,9 +1,13 @@
+require('dotenv').config();
+
 const morgan = require('morgan');
 const api = require('./api');
-const PORT = 4000;
+
+const HOST = process.env.HOST || "bougie.haus";
+const PORT = process.env.PORT || 80;
 
 api.use(morgan('dev'));
 
 api.listen(PORT, () => {
-    console.log('api listening on http://localhost:' + PORT)
+    console.log(`api listening on http://${HOST}:${PORT}`)
 });

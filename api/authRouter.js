@@ -42,19 +42,21 @@ authRouter.post("/register", async (req, res, next) => {
 });
 
 authRouter.get(
-  "/auth/login/google",
+  "/login/google",
   passport.authenticate("google", {
     scope: ["profile"]
   })
 );
 
-authRouter.get("/auth/login/google/callback", async (req, res, next) => {
-  passport.authenticate("google", {
-    failureRedirect: "/login`"
-  }, handlePassportResponse(req, res, next))(req, res, next)
+authRouter.get("/login/google/callback", async (req, res, next) => {
+  passport.authenticate("google", handlePassportResponse(req, res, next))(
+    req,
+    res,
+    next
+  );
 });
 
-authRouter.get('/logout', (req, res) => {
+authRouter.get("/logout", (req, res) => {
   req.logout();
   res.redirect("/");
 });

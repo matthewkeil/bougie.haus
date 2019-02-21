@@ -18,8 +18,8 @@ export default class App extends Component {
     return (
       <div className={styles.container}>
         <Route path="/" exact component={Home} />
-        <Route path="/users/register" component={Register} />
-        <Route path="/users/login" component={Login} />
+        <Route path="/auth/register" component={Register} />
+        <Route path="/auth/login" exact component={Login} />
         {/* <Route path="/recipes" component={RecipeList} />
         <Route path="/recipes/new" component={NewRecipe} />
         <Route path="/recipes/:name" component={RecipeList} /> */}

@@ -10,9 +10,13 @@ import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 
 import styles from "./Login.module.scss";
+
+import SocialLogin from "../SocialLogin";
 import google from "../../../assets/google.svg";
 import facebook from "../../../assets/facebook.svg";
 import instagram from "../../../assets/instagram.jpg";
+
+const baseUrl = process.env.API || "http://localhost:4000";
 
 const socials = {
   google,
@@ -58,15 +62,14 @@ const Login = props => (
       <div className={styles.spacerText}>log in with </div>
       <ul className={styles.icons}>
         {Object.entries(socials).map(([social, sprite], key) => (
-          <Link
-            className={styles.iconContainer}
-            to={"/users/login/" + social}
-            key={key}
-          >
-            <li>
-              <img className={styles.icon} src={sprite} alt={social} />
-            </li>
-          </Link>
+          <li key={key} className={styles.iconContainer}>
+            <SocialLogin
+              social={social}
+              sprite={sprite}
+              baseUrl={baseUrl}
+              imgClassName={styles.icon}
+            />
+          </li>
         ))}
       </ul>
     </Paper>

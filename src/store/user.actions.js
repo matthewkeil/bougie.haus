@@ -11,7 +11,7 @@ const ACTIONS = {
 const userActionCreators = {
   attemptLogin: (email, password) => dispatch =>
     axios
-      .post(`${API_URL}/users/login`, {
+      .post(`${API_URL}/auth/login`, {
         email,
         password
       })
