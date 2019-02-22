@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { Field, reduxForm, formValueSelector } from "redux-form";
 
-import ACT from "../../../store/actions";
+import {ACT} from "../../../store";
 
 import Paper from "@material-ui/core/Paper";
 import TextField from "@material-ui/core/TextField";
@@ -87,7 +87,7 @@ const mapState = state => {
 const mapDispatch = dispatch => ({
   attemptLogin: (e, email, password) => {
     e.preventDefault();
-    dispatch(ACT.user.attemptLogin(email, password));
+    dispatch(ACT.auth.attemptLogin(email, password));
   }
 });
 

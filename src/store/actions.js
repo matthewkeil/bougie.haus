@@ -1,7 +1,8 @@
-import user from './user.actions';
+import { routerActions as router } from 'connected-react-router';
+import { authActions as auth } from './auth/auth.actions';
 
-const ACT = {
-    user
+
+export const ACT = {
+    router,
+    auth,
 };
-
-export default ACT;

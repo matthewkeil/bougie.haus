@@ -3,12 +3,12 @@ import thunk from 'redux-thunk';
 import { reducer as formReducer } from 'redux-form'
 import { connectRouter, routerMiddleware } from 'connected-react-router';
 
-import user from './user.reducer';
+import auth from './auth/auth.reducer';
 
 const rootReducer = (history) => combineReducers({
     router: connectRouter(history),
     form: formReducer,
-    user
+    auth
 });
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
@@ -20,3 +20,5 @@ export default function configureStore(history, initialState) {
         composeEnhancers(applyMiddleware(thunk, routerMiddleware(history))),
     );
 }
+
+export {ACT} from './actions';
