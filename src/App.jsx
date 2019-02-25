@@ -3,7 +3,7 @@ import { Route } from "react-router-dom";
 
 import styles from "./App.module.scss";
 
-import { Home, Register, Login } from "./components";
+import { Home, Register, Login, Recipe } from "./components";
 
 export default class App extends Component {
   state = {
@@ -20,9 +20,7 @@ export default class App extends Component {
         <Route path="/" exact component={Home} />
         <Route path="/auth/register" component={Register} />
         <Route path="/auth/login" exact component={Login} />
-        {/* <Route path="/recipes" component={RecipeList} />
-        <Route path="/recipes/new" component={NewRecipe} />
-        <Route path="/recipes/:name" component={RecipeList} /> */}
+        <Route path="/recipe" component={Recipe} />
       </div>
     );
   }

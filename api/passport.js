@@ -6,7 +6,7 @@ const GoogleStrategy = require("passport-google-oauth20").Strategy;
 const User = require("./models/User");
 
 const HOST = process.env.HOST;
-const PORT = process.env.PORT ? `:${process.env.PORT}` : "";
+const PORT = process.env.API_PORT ? `:${process.env.API_PORT}` : "";
 const API = HOST + PORT;
 
 /**

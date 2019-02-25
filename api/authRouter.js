@@ -8,10 +8,11 @@ const handlePassportResponse = (req, res, next) => (err, user, info) => {
   }
 
   if (user) {
-    return res.json({
-      message: "successfully logged in",
-      token: user.token
-    });
+    return res.redirect('http://localhost:3000');
+    // return res.json({
+    //   message: "successfully logged in",
+    //   token: user.token
+    // });
   }
 
   if (!!info && info.message) {
@@ -44,7 +45,7 @@ authRouter.post("/register", async (req, res, next) => {
 authRouter.get(
   "/login/google",
   passport.authenticate("google", {
-    scope: ["profile"]
+    scope: ["email", "profile", "openid"],
   })
 );
 

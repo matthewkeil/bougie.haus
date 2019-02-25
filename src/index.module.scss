@@ -1,5 +1,5 @@
 
-$base: tan;
+$base: #F6EFFA;
 
 $primary: #3b1051;
 $primary-dark: #260d4c;
@@ -23,7 +23,7 @@ body {
   line-height: 2.375;
   font-size: 1rem;
   color: $base;
-  background-color: $primary;
+  background-color: $base;
   font-family: "Source Sans Pro", "Roboto", sans-serif;
 }
 
