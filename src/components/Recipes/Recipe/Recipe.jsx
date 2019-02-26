@@ -4,251 +4,23 @@ import Paper from "@material-ui/core/Paper";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 
+
+import {ACT} from '../../../store'
+
 import styles from "./Recipe.module.scss";
 
-const recipe = {
-  name: "Masala Chai",
-  img: {
-    url:
-      "https://motherwouldknow.com/wp-content/uploads/2017/04/2017-04-24-chai-madeleines-spices-and-tea-w-1.jpg",
-    alt: "masala chai"
-  },
-  slug: "spiced milk tea from india",
-  description:
-    "Masala chai is a delicately balanced tea that highlights the subtle complexities of Indian cuisine.  This creamy brew is perfumed with spicy cinnamon, floral cardamom and fragrant clove and anise that unite in your mouth in an explosion of flavor",
-  ingredients: [
-    {
-      id: 0,
-      qty: {
-        value: 3,
-        label: "g"
-      },
-      name: {
-        display: "ginger"
-      },
-      type: {
-        stored: "dried",
-        part: "whole"
-      }
-    },
-    {
-      id: 1,
-      qty: {
-        value: 1.5,
-        label: "g"
-      },
-      name: {
-        display: "curled cinnamon"
-      },
-      type: {
-        variety: "curled",
-        stored: "dried",
-        part: "whole"
-      }
-    },
-    {
-      id: 2,
-      qty: {
-        value: 0.65,
-        label: "g"
-      },
-      name: {
-        display: "flat cinnamon"
-      },
-      type: {
-        variety: "flat",
-        stored: "dried",
-        part: "whole"
-      }
-    },
-    {
-      id: 3,
-      qty: {
-        value: 0.6,
-        label: "g"
-      },
-      name: {
-        display: "black pepper"
-      },
-      type: {
-        variety: "black",
-        stored: "dried",
-        part: "whole"
-      }
-    },
-    {
-      id: 4,
-      qty: {
-        value: 0.15,
-        label: "g"
-      },
-      name: {
-        display: "tailed pepper"
-      },
-      type: {
-        variety: "tailed",
-        stored: "dried",
-        part: "whole"
-      }
-    },
-    {
-      id: 5,
-      qty: {
-        value: 0.15,
-        label: "g"
-      },
-      name: {
-        display: "clove"
-      },
-      type: {
-        stored: "dried",
-        part: "whole"
-      }
-    },
-    {
-      id: 6,
-      qty: {
-        value: 0.15,
-        label: "g"
-      },
-      name: {
-        display: "javentri",
-        aliases: ["mace"]
-      },
-      type: {
-        stored: "dried",
-        part: "whole"
-      }
-    },
-    {
-      id: 7,
-      qty: {
-        value: 0.3,
-        label: "g"
-      },
-      name: {
-        display: "star anise"
-      },
-      type: {
-        stored: "dried",
-        part: "whole"
-      }
-    },
-    {
-      id: 8,
-      qty: {
-        value: 1.25,
-        label: "g"
-      },
-      name: {
-        display: "green cardamom"
-      },
-      type: {
-        // variety: "green",
-        stored: "dried",
-        part: "whole"
-      }
-    },
-    {
-      id: 9,
-      qty: {
-        value: 0.5,
-        label: "g"
-      },
-      name: {
-        display: "black cardamom"
-      },
-      type: {
-        // variety: "black",
-        stored: "dried",
-        part: "whole"
-      }
-    },
-    {
-      id: 10,
-      qty: {
-        value: 9.2,
-        label: "g",
-        aliases: [
-          {
-            value: 4,
-            label: "tea bags"
-          }
-        ]
-      },
-      name: {
-        display: "tea"
-      },
-      type: {
-        brand: "Tetly",
-        type: "black",
-        stored: "dried",
-        part: "whole"
-      }
-    },
-    {
-      id: 11,
-      name: {
-        display: "sugar"
-      },
-      qty: {
-        value: 40,
-        label: "g"
-      }
-    },
-    {
-      id: 12,
-      name: {
-        display: "water"
-      },
-      qty: {
-        value: 350,
-        label: "g"
-      }
-    },
-    {
-      id: 13,
-      qty: {
-        value: 350,
-        label: "g"
-      },
-      name: {
-        display: "milk"
-      },
-      type: {
-        variety: "whole",
-        stored: "fresh"
-      }
-    }
-  ],
-  steps: [
-    {
-      process: "grind",
-      ingredients: [0, 1, 2, 3, 4, 5, 6, 7],
-      to: `a fine powder`
-    },
-    {
-      process: "grind",
-      ingredients: [8, 9]
-    },
-    {
-        process: 'heat',
-        ingredients: [12, 13],
-        to: 'boiling'
-    }
-  ]
-};
-
-function IngredientsList({ ingredients }) {
+function IngredientsList({ recipe: { ingredients } }) {
   return (
     <Fragment>
-      <h2>Ingredients</h2>
+      <h2 className={styles.tabHeading}>Ingredients</h2>
       <ul>
         {ingredients.map(ing => {
           const { id, qty, name } = ing;
           return (
-            <li className={styles.ingredientsListItem} key={id}>
-              {qty.value} {qty.label} - {name.display}
+            <li className={styles.ingredientListItem} key={id}>
+                <span className={styles.ingredientQty}>{`${qty.value} ${qty.label}`}</span>
+                <p>- {name.display}</p>
+              {/* {qty.value} {qty.label} - {name.display} */}
             </li>
           );
         })}
@@ -257,36 +29,36 @@ function IngredientsList({ ingredients }) {
   );
 }
 
-function StepsList({ steps }) {
+function StepsList({ recipe: { ingredients, steps } }) {
   return (
     <Fragment>
-      <h2>Steps</h2>
+      <h2 className={styles.tabHeading}>Steps</h2>
       <ul>
         {steps.map((step, key) => {
-          const { process, notes, to } = step;
+          const { process, notes, until } = step;
 
           let stepText = "";
 
           if (step.ingredients && !!step.ingredients.length) {
-            const ingredients = step.ingredients
-              .map(id => recipe.ingredients.filter(ing => ing.id === id)[0])
+            const ingredientNames = step.ingredients
+              .map(id => ingredients.filter(ing => ing.id === id)[0])
               .map(ing => ing.name.display);
 
-            switch (ingredients.length) {
+            switch (ingredientNames.length) {
               case 0:
                 break;
               case 1:
-                stepText += ingredients[0];
+                stepText += ingredientNames[0];
                 break;
               case 2:
-                stepText += `${ingredients[0]} and ${ingredients[1]}`;
+                stepText += `${ingredientNames[0]} and ${ingredientNames[1]}`;
                 break;
               default:
-                ingredients.forEach((name, i) => {
+                ingredientNames.forEach((name, i) => {
                   switch (i) {
-                    case ingredients.length - 2:
+                    case ingredientNames.length - 2:
                       return (stepText += `${name} and `);
-                    case ingredients.length - 1:
+                    case ingredientNames.length - 1:
                       return (stepText += `${name}`);
                     default:
                       return (stepText += `${name}, `);
@@ -295,8 +67,8 @@ function StepsList({ steps }) {
             }
           }
 
-          if (!!to) {
-            stepText += ` to ${to}`;
+          if (!!until) {
+            stepText += ` until ${until}`;
           }
 
           stepText += '.';
@@ -307,8 +79,9 @@ function StepsList({ steps }) {
           }
 
           return (
-            <li className={styles.stepsListItem} key={key}>
-              <span>{process}</span> {stepText}
+            <li className={styles.stepListItem} key={key}>
+              <span className={styles.stepProcess}>{process}</span>
+              <p>{stepText}</p>
             </li>
           );
         })}
@@ -317,34 +90,42 @@ function StepsList({ steps }) {
   );
 }
 
-function mapStateToProps(state, ownProps) {
-  return {};
+function mapStateToProps(state) {
+  return {
+      recipe: state.recipes.current
+  };
 }
 
 function mapDispatchToProps(dispatch) {
-  return {};
+  return {
+      loadRecipe: (id) => dispatch(ACT.recipes.loadRecipe(id))
+  };
 }
 
 class Recipe extends Component {
   state = {
-    activeTab: 0,
-    recipe
+    activeTab: 0
   };
 
-  handleTabChange = e => {
-    console.log(e.target);
+  componentDidMount() {
+      this.props.loadRecipe(this.props.match.params.urlName);
+  }
+
+  handleTabChange = (e, value) => {
+      e.preventDefault();
+    this.setState({activeTab: value});
   };
 
   render() {
-    const { activeTab } = this.state;
-    const { name, slug, ingredients, steps, img } = this.state.recipe;
-
-    return (
+    const { activeTab} = this.state;
+    const { recipe } = this.props;
+    
+    return !recipe ? null : (
       <Fragment>
-        <img className={styles.img} src={img.url} alt={img.alt} />
+        <img className={styles.img} src={recipe.img.url} alt={recipe.img.alt} />
         <div className={styles.container}>
-          <h1 className={styles.h1}>{name}</h1>
-          <p>{slug}</p>
+          <h1 className={styles.h1}>{recipe.name}</h1>
+          <p>{recipe.slug}</p>
           <Paper className={styles.paper} elevation={2}>
             <Tabs value={activeTab} onChange={this.handleTabChange}>
               <Tab label="recipe" />
@@ -352,10 +133,10 @@ class Recipe extends Component {
               <Tab label="info" />
             </Tabs>
             {activeTab === 0 && (
-              <Fragment>
-                {/* <IngredientsList ingredients={ingredients} /> */}
-                <StepsList steps={steps} />
-              </Fragment>
+              <div className={styles.tabContainer}>
+                <IngredientsList recipe={recipe} />
+                <StepsList recipe={recipe} />
+              </div>
             )}
           </Paper>
         </div>

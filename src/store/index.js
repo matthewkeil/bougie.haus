@@ -4,11 +4,13 @@ import { reducer as formReducer } from 'redux-form'
 import { connectRouter, routerMiddleware } from 'connected-react-router';
 
 import auth from './auth/auth.reducer';
+import recipes from './recipes/recipes.reducer';
 
 const rootReducer = (history) => combineReducers({
     router: connectRouter(history),
     form: formReducer,
-    auth
+    auth,
+    recipes
 });
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;

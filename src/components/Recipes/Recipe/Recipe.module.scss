@@ -1,13 +1,14 @@
 @import "../../../index.module.scss";
 
+$contentOffset: 3.3rem;
+$separation: .3rem;
+$spanWidth: $contentOffset - $separation;
+
 .container {
     padding-left: 4vw;
     padding-right: 4vw;
+    padding-bottom: 4vw;
     color: $primary-dark;
-}
-
-.paper {
-    height: 500px;
 }
 
 img {
@@ -19,11 +20,35 @@ h1 {
     font-size: 2rem;
 }
 
-.ingredientListItem {
-    color: green;
+.paper {
+    padding-left: .7rem;
+    padding-right: .7rem;
 }
 
-.stepsListItem > span {
+.tabContainer {
+    padding-top: 1rem;
+    padding-bottom: 2rem;
+}
+
+.tabHeading {
+    text-align: center;
+    font-size: 1.5rem;
+    line-height: 2.5rem;
+}
+
+.ingredientListItem, .stepListItem {
+    position: relative;
+    padding-left: $contentOffset;
+}
+
+.stepProcess, .ingredientQty {
+    left: 0;
+    width: $spanWidth;
+    text-align: right;
+    position: absolute;
     font-weight: bold;
+}
+
+.stepProcess {
     text-transform: capitalize;
 }

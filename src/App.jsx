@@ -20,7 +20,7 @@ export default class App extends Component {
         <Route path="/" exact component={Home} />
         <Route path="/auth/register" component={Register} />
         <Route path="/auth/login" exact component={Login} />
-        <Route path="/recipe" component={Recipe} />
+        <Route path="/recipes/:urlName" component={Recipe} />
       </div>
     );
   }
