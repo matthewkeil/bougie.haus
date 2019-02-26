@@ -4,8 +4,7 @@ import Paper from "@material-ui/core/Paper";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 
-
-import {ACT} from '../../../store'
+import { ACT } from "../../../store";
 
 import styles from "./Recipe.module.scss";
 
@@ -14,16 +13,14 @@ function IngredientsList({ recipe: { ingredients } }) {
     <Fragment>
       <h2 className={styles.tabHeading}>Ingredients</h2>
       <ul>
-        {ingredients.map(ing => {
-          const { id, qty, name } = ing;
-          return (
-            <li className={styles.ingredientListItem} key={id}>
-                <span className={styles.ingredientQty}>{`${qty.value} ${qty.label}`}</span>
-                <p>- {name.display}</p>
-              {/* {qty.value} {qty.label} - {name.display} */}
-            </li>
-          );
-        })}
+        {Object.values(ingredients).map((ing, key) => (
+          <li className={styles.ingredientsListItem} key={key}>
+            <span className={styles.ingredientsQty}>{`${ing.qty.value} ${
+              ing.qty.label
+            }`}</span>
+            <p>{ing.name.simple}</p>
+          </li>
+        ))}
       </ul>
     </Fragment>
   );
@@ -40,47 +37,76 @@ function StepsList({ recipe: { ingredients, steps } }) {
           let stepText = "";
 
           if (step.ingredients && !!step.ingredients.length) {
-            const ingredientNames = step.ingredients
-              .map(id => ingredients.filter(ing => ing.id === id)[0])
-              .map(ing => ing.name.display);
+            const nameMap = {};
 
-            switch (ingredientNames.length) {
-              case 0:
-                break;
-              case 1:
-                stepText += ingredientNames[0];
-                break;
-              case 2:
-                stepText += `${ingredientNames[0]} and ${ingredientNames[1]}`;
-                break;
-              default:
-                ingredientNames.forEach((name, i) => {
-                  switch (i) {
-                    case ingredientNames.length - 2:
-                      return (stepText += `${name} and `);
-                    case ingredientNames.length - 1:
-                      return (stepText += `${name}`);
-                    default:
-                      return (stepText += `${name}, `);
-                  }
-                });
+            step.ingredients.forEach(id => {
+              const name = ingredients[id].name.simple;
+
+              const variety =
+                !!ingredients[id].type && !!ingredients[id].type.variety
+                  ? ingredients[id].type.variety
+                  : undefined;
+
+              if (!!variety) {
+                if (!!nameMap[name]) nameMap[name].push(variety);
+                else nameMap[name] = [variety];
+
+                return;
+              }
+
+              nameMap[name] = !!nameMap[name] ? nameMap[name] : null;
+            });
+
+            function listize(array) {
+              let listizeText = "";
+
+              switch (array.length) {
+                case 0:
+                  return;
+                case 1:
+                  listizeText += array[0];
+                  return;
+                case 2:
+                  listizeText += array.join(" and ");
+                  break;
+                default:
+                  array.forEach((name, i) => {
+                    switch (i) {
+                      case array.length - 2:
+                        return (listizeText += `${name} and `);
+                      case array.length - 1:
+                        return (listizeText += `${name}`);
+                      default:
+                        return (listizeText += `${name}, `);
+                    }
+                  });
+              }
+
+              return listizeText;
             }
+
+            stepText += listize(
+              Object.entries(nameMap).map(([name, varieties]) =>
+                varieties && varieties.length > 1
+                  ? `${listize(varieties)} ${name}`
+                  : name
+              )
+            );
           }
 
           if (!!until) {
             stepText += ` until ${until}`;
           }
 
-          stepText += '.';
+          stepText += ".";
 
           if (!!notes) {
-
-              stepText += ` ${notes}`
+            stepText += ` ${notes}`;
           }
 
           return (
-            <li className={styles.stepListItem} key={key}>
-              <span className={styles.stepProcess}>{process}</span>
+            <li className={styles.stepsListItem} key={key}>
+              <span className={styles.stepsProcess}>{process}</span>
               <p>{stepText}</p>
             </li>
           );
@@ -92,13 +118,13 @@ function StepsList({ recipe: { ingredients, steps } }) {
 
 function mapStateToProps(state) {
   return {
-      recipe: state.recipes.current
+    recipe: state.recipes.current
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-      loadRecipe: (id) => dispatch(ACT.recipes.loadRecipe(id))
+    loadRecipe: id => dispatch(ACT.recipes.loadRecipe(id))
   };
 }
 
@@ -108,18 +134,18 @@ class Recipe extends Component {
   };
 
   componentDidMount() {
-      this.props.loadRecipe(this.props.match.params.urlName);
+    this.props.loadRecipe(this.props.match.params.urlName);
   }
 
   handleTabChange = (e, value) => {
-      e.preventDefault();
-    this.setState({activeTab: value});
+    e.preventDefault();
+    this.setState({ activeTab: value });
   };
 
   render() {
-    const { activeTab} = this.state;
+    const { activeTab } = this.state;
     const { recipe } = this.props;
-    
+
     return !recipe ? null : (
       <Fragment>
         <img className={styles.img} src={recipe.img.url} alt={recipe.img.alt} />

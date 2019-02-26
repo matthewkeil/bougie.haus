@@ -1,8 +1,9 @@
 @import "../../../index.module.scss";
 
-$contentOffset: 3.3rem;
-$separation: .3rem;
-$spanWidth: $contentOffset - $separation;
+$qtyWidth: 3rem;
+$separatorSpace: 1.5rem;
+$separatorOffset: $qtyWidth - .1rem + $separatorSpace/2;
+$contentOffset: $separatorSpace + $qtyWidth;
 
 .container {
     padding-left: 4vw;
@@ -36,19 +37,25 @@ h1 {
     line-height: 2.5rem;
 }
 
-.ingredientListItem, .stepListItem {
+.ingredientsListItem, .stepsListItem {
     position: relative;
     padding-left: $contentOffset;
 }
 
-.stepProcess, .ingredientQty {
+.ingredientsQty, .stepsProcess {
     left: 0;
-    width: $spanWidth;
+    width: $qtyWidth;
     text-align: right;
     position: absolute;
     font-weight: bold;
 }
 
-.stepProcess {
+.stepsProcess {
     text-transform: capitalize;
+}
+
+.ingredientsListItem p::before {
+    content: '-';
+    position: absolute;
+    left: $separatorOffset;
 }

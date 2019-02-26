@@ -20,29 +20,28 @@ const loadRecipe = id => dispatch => {
     slug: "spiced milk tea from india",
     description:
       "Masala chai is a delicately balanced tea that highlights the subtle complexities of Indian cuisine.  This creamy brew is perfumed with spicy cinnamon, floral cardamom and fragrant clove and anise that unite in your mouth in an explosion of flavor",
-    ingredients: [
-      {
-        id: 0,
+    ingredients: {
+      0: {
         qty: {
           value: 3,
           label: "g"
         },
         name: {
-          display: "ginger"
+          simple: "ginger"
         },
         type: {
           stored: "dried",
           part: "whole"
         }
       },
-      {
+      1: {
         id: 1,
         qty: {
           value: 1.5,
           label: "g"
         },
         name: {
-          display: "curled cinnamon"
+          simple: "cinnamon"
         },
         type: {
           variety: "curled",
@@ -50,14 +49,14 @@ const loadRecipe = id => dispatch => {
           part: "whole"
         }
       },
-      {
+      2: {
         id: 2,
         qty: {
           value: 0.65,
           label: "g"
         },
         name: {
-          display: "flat cinnamon"
+          simple: "cinnamon"
         },
         type: {
           variety: "flat",
@@ -65,14 +64,14 @@ const loadRecipe = id => dispatch => {
           part: "whole"
         }
       },
-      {
+      3: {
         id: 3,
         qty: {
           value: 0.6,
           label: "g"
         },
         name: {
-          display: "black pepper"
+          simple: "pepper"
         },
         type: {
           variety: "black",
@@ -80,14 +79,14 @@ const loadRecipe = id => dispatch => {
           part: "whole"
         }
       },
-      {
+      4: {
         id: 4,
         qty: {
           value: 0.15,
           label: "g"
         },
         name: {
-          display: "tailed pepper"
+          simple: "pepper"
         },
         type: {
           variety: "tailed",
@@ -95,28 +94,28 @@ const loadRecipe = id => dispatch => {
           part: "whole"
         }
       },
-      {
+      5: {
         id: 5,
         qty: {
           value: 0.15,
           label: "g"
         },
         name: {
-          display: "clove"
+          simple: "clove"
         },
         type: {
           stored: "dried",
           part: "whole"
         }
       },
-      {
+      6: {
         id: 6,
         qty: {
           value: 0.15,
           label: "g"
         },
         name: {
-          display: "javentri",
+          simple: "javentri",
           aliases: ["mace"]
         },
         type: {
@@ -124,51 +123,51 @@ const loadRecipe = id => dispatch => {
           part: "whole"
         }
       },
-      {
+      7: {
         id: 7,
         qty: {
           value: 0.3,
           label: "g"
         },
         name: {
-          display: "star anise"
+          simple: "star anise"
         },
         type: {
           stored: "dried",
           part: "whole"
         }
       },
-      {
+      8: {
         id: 8,
         qty: {
           value: 1.25,
           label: "g"
         },
         name: {
-          display: "green cardamom"
+          simple: "cardamom"
         },
         type: {
-          // variety: "green",
+          variety: "green",
           stored: "dried",
           part: "whole"
         }
       },
-      {
+      9: {
         id: 9,
         qty: {
           value: 0.5,
           label: "g"
         },
         name: {
-          display: "black cardamom"
+          simple: "cardamom",
         },
         type: {
-          // variety: "black",
+          variety: "black",
           stored: "dried",
           part: "whole"
         }
       },
-      {
+      10: {
         id: 10,
         qty: {
           value: 9.2,
@@ -181,7 +180,7 @@ const loadRecipe = id => dispatch => {
           ]
         },
         name: {
-          display: "tea"
+          simple: "tea"
         },
         type: {
           brand: "Tetly",
@@ -190,41 +189,41 @@ const loadRecipe = id => dispatch => {
           part: "whole"
         }
       },
-      {
+      11: {
         id: 11,
         name: {
-          display: "sugar"
+          simple: "sugar"
         },
         qty: {
           value: 40,
           label: "g"
         }
       },
-      {
+      12: {
         id: 12,
         name: {
-          display: "water"
+          simple: "water"
         },
         qty: {
           value: 350,
           label: "g"
         }
       },
-      {
+      13: {
         id: 13,
         qty: {
           value: 350,
           label: "g"
         },
         name: {
-          display: "milk"
+          simple: "milk"
         },
         type: {
           variety: "whole",
           stored: "fresh"
         }
       }
-    ],
+    },
     steps: [
       {
         process: "grind",
@@ -247,7 +246,7 @@ const loadRecipe = id => dispatch => {
 };
 
 const recipesActions = {
-    loadRecipe
+  loadRecipe
 };
 
 export { ACTIONS as RECIPES_ACTIONS, recipesActions };
