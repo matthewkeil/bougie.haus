@@ -1,9 +1,9 @@
 import React, { Component } from "react";
-import { Route } from "react-router-dom";
+import { Route, Switch } from "react-router-dom";
 
 import styles from "./App.module.scss";
 
-import { Home, Register, Login, Recipe } from "./components";
+import { Notifier, Home, Register, Login, Recipe, NewRecipe, Ingredient } from "./components";
 
 export default class App extends Component {
   state = {
@@ -17,10 +17,15 @@ export default class App extends Component {
 
     return (
       <div className={styles.container}>
-        <Route path="/" exact component={Home} />
-        <Route path="/auth/register" component={Register} />
-        <Route path="/auth/login" exact component={Login} />
-        <Route path="/recipes/:urlName" component={Recipe} />
+        <Notifier />
+        <Switch>
+          <Route path="/" exact component={Home} />
+          <Route path="/auth/register" component={Register} />
+          <Route path="/auth/login" exact component={Login} />
+          <Route path="/recipes/new" component={NewRecipe} />
+          <Route path="/recipes/:urlName" component={Recipe} />
+          <Route path="/ingredients/:urlName" component={Ingredient} />
+        </Switch>
       </div>
     );
   }

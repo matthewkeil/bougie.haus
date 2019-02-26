@@ -5,12 +5,16 @@ import { connectRouter, routerMiddleware } from 'connected-react-router';
 
 import auth from './auth/auth.reducer';
 import recipes from './recipes/recipes.reducer';
+import ingredients from './ingredients/ingredients.reducer';
+import {snackbarReducer as snackbar} from './snackbar';
 
 const rootReducer = (history) => combineReducers({
     router: connectRouter(history),
     form: formReducer,
     auth,
-    recipes
+    recipes,
+    ingredients,
+    snackbar
 });
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;

@@ -1,5 +1,6 @@
 import React, { Fragment } from "react";
 import styles from "./Recipe.module.scss";
+import { listify } from "../../helpers";
 
 function IngredientsList({ recipe: { ingredients } }) {
   return (
@@ -50,26 +51,10 @@ function StepsList({ recipe: { ingredients, steps } }) {
               nameMap[name] = !!nameMap[name] ? nameMap[name] : null;
             });
 
-            function listize(array) {
-              return array
-                .map((name, i) => {
-                  if (array.length - i === 1) {
-                    return name;
-                  }
-
-                  if (array.length - i === 2) {
-                    return `${name} and `;
-                  }
-
-                  return `${name}, `;
-                })
-                .join("");
-            }
-
-            stepText += listize(
+            stepText += listify(
               Object.entries(nameMap).map(([name, varieties]) =>
                 varieties && varieties.length > 1
-                  ? `${listize(varieties)} ${name}`
+                  ? `${listify(varieties)} ${name}`
                   : name
               )
             );

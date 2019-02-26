@@ -12,15 +12,19 @@ const handle = (fn) => async (req, res, next) => {
     } catch (err) { next(err) }
 }
 
+router.post('/new', handle(async (req, res) => {
+    const recipe = new Recipe(req.body);
+
+    const result = await recipe.save()
+
+    res.json(result);
+}))
+
 router.route('/:urlName')
     .get(handle(async (req, res) => {
         const [result] = await Recipe.find({urlName: req.params.urlName})
         res.json(mock);
     }))
-    .post(async (req, res) => {
-        console.log(req.body);
-        const [result] = await Recipe.find({urlName: req.params.urlName})
-    })
     .patch(async (req, res) => {
         console.log(req.body);
         const [result] = await Recipe.findOneAndUpdate({urlName: req.params.urlName}, {...req.body});
