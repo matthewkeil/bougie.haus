@@ -3,7 +3,7 @@ const ExtractJwt = require("passport-jwt").ExtractJwt;
 const JwtStrategy = require("passport-jwt").Strategy;
 const LocalStrategy = require("passport-local").Strategy;
 const GoogleStrategy = require("passport-google-oauth20").Strategy;
-const User = require("./models/User");
+const {User} = require("./models");
 
 const HOST = process.env.HOST;
 const PORT = process.env.API_PORT ? `:${process.env.API_PORT}` : "";
