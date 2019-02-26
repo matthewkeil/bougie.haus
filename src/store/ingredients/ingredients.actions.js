@@ -1,6 +1,6 @@
 import { routerActions } from "connected-react-router";
 
-import {ACT} from '../actions';
+import {snackbarActions as snackbar} from '../snackbar';
 
 const axios = require("axios");
 
@@ -22,7 +22,7 @@ const loadIngredientSuccess = ({ ingredient }) => ({
 
 const LOAD_INGREDIENT_FAILURE = "LOAD_INGREDIENT_FAILURE";
 const loadIngredientFailure = ({ error }) => dispatch => {
-  dispatch(ACT.snackbar.show(error.message));
+  dispatch(snackbar.enqueueSnackbar({message: error.message}));
 };
 
 const loadIngredient = ({ urlName }) => dispatch => {

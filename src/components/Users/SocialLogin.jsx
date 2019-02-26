@@ -12,22 +12,22 @@ class SocialLogin extends React.Component {
     this.attemptLogin();
   }
 
-  attemptLogin() {
-    const { social, baseUrl } = this.props;
-    const width = 600,
-      height = 600;
-    const left = window.innerWidth / 2 - width / 2;
-    const top = window.innerHeight / 2 - height / 2;
-    const url = `${baseUrl}/auth/login/${social}`; //?socketId=${socket.id}`
+  // attemptLogin() {
+  //   const { social, baseUrl } = this.props;
+  //   const width = 600,
+  //     height = 600;
+  //   const left = window.innerWidth / 2 - width / 2;
+  //   const top = window.innerHeight / 2 - height / 2;
+  //   const url = `${baseUrl}/auth/login/${social}`; //?socketId=${socket.id}`
 
-    const popup = window.open(
-      url,
-      "_blank",
-      `toolbar=no, location=no, directories=no, status=no, menubar=no, 
-          scrollbars=no, resizable=no, copyhistory=no, width=${width}, 
-          height=${height}, top=${top}, left=${left}`
-    );
-  }
+  //   const popup = window.open(
+  //     url,
+  //     "_blank",
+  //     `toolbar=no, location=no, directories=no, status=no, menubar=no, 
+  //         scrollbars=no, resizable=no, copyhistory=no, width=${width}, 
+  //         height=${height}, top=${top}, left=${left}`
+  //   );
+  // }
 
   render() {
     const { social, sprite, imgClassName, baseUrl } = this.props;

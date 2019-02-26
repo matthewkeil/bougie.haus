@@ -32,7 +32,7 @@ const defaultState = {
 
 const snackbarReducer = (state = defaultState, action) => {
     switch (action.type) {
-        case 'ENQUEUE_SNACKBAR':
+        case SNACKBAR_ACTIONS.ENQUEUE_SNACKBAR:
             return {
                 ...state,
                 notifications: [
@@ -43,7 +43,7 @@ const snackbarReducer = (state = defaultState, action) => {
                 ],
             };
 
-        case 'REMOVE_SNACKBAR':
+        case SNACKBAR_ACTIONS.REMOVE_SNACKBAR:
             return {
                 ...state,
                 notifications: state.notifications.filter(
