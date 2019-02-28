@@ -1,24 +1,21 @@
 const mongoose = require('mongoose');
 
-const {urlSafe} = require('./helpers');
+const {urlSafe} = require('../../helpers');
 
 const ingredientSchema = new mongoose.Schema({
-    name: {
-        simple: String,
-        common: String,
-        aliases: [String]
-    },
+    name: String,
+    wiki: String,
     urlName: {
         type: String,
         unique: true,
-        default: function() { return urlSafe(this.name.common) }
+        default: function() { return urlSafe(this.name) }
     },
-    variety: String,
-    portion: {
-        type: [String],
-        default: function () { return ['whole'] }
-    },
-    preservation: String
+    varieties: [String],
+    // parts: {
+    //     type: [String],
+    //     default: function () { return ['whole'] }
+    // },
+    // preservation: String
 });
 
 exports.schema = ingredientSchema;

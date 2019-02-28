@@ -3,10 +3,10 @@ import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { Field, reduxForm, formValueSelector } from "redux-form";
 
+import { renderTextField } from "../../helpers";
 import {ACT} from "../../../store";
 
 import Paper from "@material-ui/core/Paper";
-import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 
 import styles from "./Login.module.scss";
@@ -24,25 +24,15 @@ const socials = {
   instagram
 };
 
-function renderTextField({ input, ...custom }) {
-  return (
-    <TextField
-      fullWidth
-      className={styles.input}
-      label={input.name}
-      {...input}
-      {...custom}
-    />
-  );
-}
+
 
 const Login = props => (
   <Fragment>
     <img className={styles.logo} src="/images/logo-600-600.svg" alt="logo" />
     <Paper className={styles.paper} elevation={6}>
-      <form onSubmit={e => props.attemptLogin(e, props.email, props.password)}>
-        <Field name="email" autoFocus component={renderTextField} />
-        <Field name="password" type="password" component={renderTextField} />
+      <form onSubmit={props.attemptLogin(props.email, props.password)}>
+        <Field fullWidth={true} className={styles.input} name="email" autoFocus component={renderTextField} />
+        <Field fullWidth={true} className={styles.input} name="password" type="password" component={renderTextField} />
         <Link
           className={`${styles.forgot} ${styles.link}`}
           to="/users/register"
@@ -85,7 +75,7 @@ const mapState = state => {
 };
 
 const mapDispatch = dispatch => ({
-  attemptLogin: (e, email, password) => {
+  attemptLogin: (email, password) => e => {
     e.preventDefault();
     dispatch(ACT.auth.attemptLogin(email, password));
   }

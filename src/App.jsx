@@ -3,7 +3,7 @@ import { Route, Switch } from "react-router-dom";
 
 import styles from "./App.module.scss";
 
-import { Notifier, Home, Register, Login, Recipe, NewRecipe, Ingredient } from "./components";
+import { Notifier, Home, Register, Login, Recipe, NewRecipe, NewIngredient } from "./components";
 
 export default class App extends Component {
   state = {
@@ -24,7 +24,7 @@ export default class App extends Component {
           <Route path="/auth/login" exact component={Login} />
           <Route path="/recipes/new" component={NewRecipe} />
           <Route path="/recipes/:urlName" component={Recipe} />
-          <Route path="/ingredients/:urlName" component={Ingredient} />
+          <Route path="/ingredients/new" component={NewIngredient} />
         </Switch>
       </div>
     );

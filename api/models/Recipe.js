@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const {urlSafe} = require('./helpers');
+const {urlSafe} = require('../../helpers');
 
 const ingredientSchema = require('./Ingredient').schema;
 

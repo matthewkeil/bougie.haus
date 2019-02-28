@@ -8,4 +8,4 @@ export {default as Register} from './Users/Register';
 
 export {Recipe, NewRecipe} from './Recipes';
 
-export {default as Ingredient} from './Ingredients/Ingredient';
+export {default as NewIngredient} from './Ingredients/NewIngredient';

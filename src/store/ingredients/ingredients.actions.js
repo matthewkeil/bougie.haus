@@ -8,6 +8,34 @@ const API_URL = process.env.API_URL || "http://localhost:4000";
 
 /**
  *
+ * attempt create ingredient thunk set
+ * ACT.ingredients.attemptAdd({name, wikipedia, varieties})
+ *
+ * adds the ingredient and goes back to referer
+ *
+ */
+const CREATE_INGREDIENT_SUCCESS = "CREATE_INGREDIENT_SUCCESS";
+const createIngredientSuccess = ({ ingredient }) => ({
+  type: CREATE_INGREDIENT_SUCCESS,
+  ingredient
+});
+
+const CREATE_INGREDIENT_FAILURE = "CREATE_INGREDIENT_FAILURE";
+const createIngredientFailure = ({ error }) => dispatch => {
+  console.log()
+  dispatch(snackbar.enqueueSnackbar({message: error.response.data.message}));
+};
+
+const attemptCreateIngredient = ingredient => dispatch => {
+  axios.post(`${API_URL}/ingredients/new`, ingredient)
+    .then(
+      res => dispatch(createIngredientSuccess({ ingredient: res.data })),
+      error => dispatch(createIngredientFailure({ error }))
+    );
+};
+
+/**
+ *
  * load ingredient thunk set
  * ACT.ingredients.loadIngredient({urlName})
  *
@@ -35,11 +63,14 @@ const loadIngredient = ({ urlName }) => dispatch => {
 };
 
 const ACTIONS = {
+  CREATE_INGREDIENT_SUCCESS,
+  CREATE_INGREDIENT_FAILURE,
   LOAD_INGREDIENT_SUCCESS,
   LOAD_INGREDIENT_FAILURE
 };
 
 const ingredientsActions = {
+  attemptCreateIngredient,
   loadIngredient
 };
 

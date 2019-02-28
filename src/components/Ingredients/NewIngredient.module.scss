@@ -1,0 +1,41 @@
+@import '../../index.module.scss';
+
+.logo {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 4vw;
+    margin-bottom: 4vw;
+}
+
+
+
+.paper {
+    color: $primary-dark;
+    background-color: white;
+    position: relative;
+    width: 92vw;
+    max-width: 32rem;;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 2rem;
+    padding-right: 2rem;
+    padding-top: 2rem;
+    padding-bottom: 1rem;
+    text-align: center;
+}
+
+.title {
+    line-height: 1;
+    padding-bottom: 1rem;
+}
+
+.input {
+    margin-top: .5rem;
+    margin-bottom: .5rem;
+}
+
+.button {
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+}
