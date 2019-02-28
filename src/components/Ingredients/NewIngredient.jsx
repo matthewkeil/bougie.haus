@@ -7,13 +7,20 @@ import Paper from "@material-ui/core/Paper";
 import Button from "@material-ui/core/Button";
 
 import { ACT } from "../../store";
-import { validate, canonical, renderTextField } from "../helpers";
+import { validators, renderTextField } from "../../helpers";
 
 import styles from "./NewIngredient.module.scss";
 
-const { required, testWikipediaUrl } = validate;
+const { required, testWikipediaUrl } = validators;
 
-const NewIngredient = ({ name, wiki, varieties, attemptCreateIngredient }) => {
+const NewIngredient = props => {
+  const { url, getTitleInfo, info, handleSubmit } = props;
+
+  const catchEnter = e => {
+    if (e.key === "Enter") {
+      getTitleInfo(url)();
+    }
+  };
 
   return (
     <Fragment>
@@ -21,8 +28,8 @@ const NewIngredient = ({ name, wiki, varieties, attemptCreateIngredient }) => {
       <Paper className={styles.paper} elevation={6}>
         <h1 className={styles.title}>Add Ingredient</h1>
         <NoSsr>
-          <form onSubmit={attemptCreateIngredient({ name, wiki, varieties })}>
-            <Field
+          <form onSubmit={handleSubmit(info)}>
+            {/* <Field
               name="name"
               placeholder="name"
               label="search for an ingredient"
@@ -30,16 +37,28 @@ const NewIngredient = ({ name, wiki, varieties, attemptCreateIngredient }) => {
               className={styles.input}
               type="text"
               component={renderTextField}
-            />
+            /> */}
             <Field
-              name="wiki"
+              name="url"
+              label="wikipedia page"
               validate={[required, testWikipediaUrl]}
-              placeholder={`wikipidia.org/wiki/${canonical(name || "")} `}
+              placeholder={`https://en.wikipidia.org/wiki/`}
               fullWidth={true}
-              className={styles.input}
+              passedClasses={{
+                input: styles.input,
+                warnClassName: styles.warn,
+                errorClassName: styles.error
+              }}
               component={renderTextField}
+              onKeyDown={catchEnter}
+              onBlur={getTitleInfo(url)}
             />
-            <Button className={styles.button} variant="contained" type="submit">
+            <Button
+              disabled={!info.pageid}
+              className={styles.button}
+              variant="contained"
+              type="submit"
+            >
               Add
             </Button>
           </form>
@@ -54,18 +73,25 @@ const form = "newIngredient";
 const mapStateToProps = state => {
   const selector = formValueSelector(form);
   return {
-    name: selector(state, "name"),
-    wiki: selector(state, "wiki")
+    url: selector(state, "url"),
+    info: state.ingredients.new.info,
+    normalized: state.ingredients.new.normalized
   };
 };
 
 function mapDispatchToProps(dispatch) {
   return {
-    attemptCreateIngredient: ({ name, wiki, varieties }) => e => {
+    getTitleInfo: url => () => {
+      dispatch(ACT.wiki.getTitleInfo(url));
+    },
+    handleSubmit: info => e => {
       e.preventDefault();
-      dispatch(
-        ACT.ingredients.attemptCreateIngredient({ name, wiki, varieties })
-      );
+      
+      const { pageid, titles, thumbnail, originalimage, extract } = info;
+    
+      const normalized = { pageid, titles, thumbnail, originalimage, extract };
+
+      dispatch(ACT.ingredients.attemptCreateIngredient(normalized));
     }
   };
 }

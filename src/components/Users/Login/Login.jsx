@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { Field, reduxForm, formValueSelector } from "redux-form";
 
-import { renderTextField } from "../../helpers";
+import { renderTextField } from "../../../helpers";
 import {ACT} from "../../../store";
 
 import Paper from "@material-ui/core/Paper";

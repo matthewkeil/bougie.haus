@@ -1,22 +1,33 @@
-const mongoose = require('mongoose');
-
-const {urlSafe} = require('../../helpers');
+const mongoose = require("mongoose");
 
 const ingredientSchema = new mongoose.Schema({
-    name: String,
-    wiki: String,
-    urlName: {
-        type: String,
-        unique: true,
-        default: function() { return urlSafe(this.name) }
+  pageid: String,
+  wiki: {
+    titles: {
+      display: String,
+      canonical: String
     },
-    varieties: [String],
-    // parts: {
-    //     type: [String],
-    //     default: function () { return ['whole'] }
-    // },
-    // preservation: String
+    thumbnail: {
+      source: String,
+      width: Number,
+      Height: Number
+    },
+    originalimage: {
+      source: String,
+      width: Number,
+      Height: Number
+    }
+  }
+  // parts: {
+  //     type: [String],
+  //     default: function () { return ['whole'] }
+  // },
+  // preservation: String
+});
+
+ingredientSchema.virtual("name", function() {
+  return this.wiki.titles.canonical;
 });
 
 exports.schema = ingredientSchema;
-exports.model = mongoose.model('Ingredient', ingredientSchema);
+exports.model = mongoose.model("Ingredient", ingredientSchema);

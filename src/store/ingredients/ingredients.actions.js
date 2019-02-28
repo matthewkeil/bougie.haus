@@ -1,6 +1,7 @@
-import { routerActions } from "connected-react-router";
+// import { routerActions } from "connected-react-router";
 
-import {snackbarActions as snackbar} from '../snackbar';
+import { snackbarActions as snackbar } from "../snackbar";
+import { routerActions } from "connected-react-router";
 
 const axios = require("axios");
 
@@ -15,19 +16,26 @@ const API_URL = process.env.API_URL || "http://localhost:4000";
  *
  */
 const CREATE_INGREDIENT_SUCCESS = "CREATE_INGREDIENT_SUCCESS";
-const createIngredientSuccess = ({ ingredient }) => ({
-  type: CREATE_INGREDIENT_SUCCESS,
-  ingredient
-});
+const createIngredientSuccess = ({ ingredient }) => dispatch => {
+  dispatch({
+    type: CREATE_INGREDIENT_SUCCESS,
+    ingredient
+  });
+  dispatch({
+    type: RESET_NEW_INGREDIENT
+  });
+  dispatch(routerActions.push('/ingredients/' + ingredient.wiki.titles.canonical))
+};
 
 const CREATE_INGREDIENT_FAILURE = "CREATE_INGREDIENT_FAILURE";
 const createIngredientFailure = ({ error }) => dispatch => {
-  console.log()
-  dispatch(snackbar.enqueueSnackbar({message: error.response.data.message}));
+  dispatch(snackbar.enqueueSnackbar(error));
 };
 
-const attemptCreateIngredient = ingredient => dispatch => {
-  axios.post(`${API_URL}/ingredients/new`, ingredient)
+const attemptCreateIngredient = normalized => dispatch => {
+  console.log(normalized);
+  axios
+    .post(`${API_URL}/ingredients/new`, normalized)
     .then(
       res => dispatch(createIngredientSuccess({ ingredient: res.data })),
       error => dispatch(createIngredientFailure({ error }))
@@ -50,7 +58,7 @@ const loadIngredientSuccess = ({ ingredient }) => ({
 
 const LOAD_INGREDIENT_FAILURE = "LOAD_INGREDIENT_FAILURE";
 const loadIngredientFailure = ({ error }) => dispatch => {
-  dispatch(snackbar.enqueueSnackbar({message: error.message}));
+  dispatch(snackbar.enqueueSnackbar({ message: error.message }));
 };
 
 const loadIngredient = ({ urlName }) => dispatch => {
@@ -62,11 +70,18 @@ const loadIngredient = ({ urlName }) => dispatch => {
     );
 };
 
+
+
+const LOAD_NEW_INGREDIENT_INFO = "LOAD_NEW_INGREDIENT_INFO";
+const RESET_NEW_INGREDIENT = "RESET_NEW_INGREDIENT";
+
 const ACTIONS = {
   CREATE_INGREDIENT_SUCCESS,
   CREATE_INGREDIENT_FAILURE,
   LOAD_INGREDIENT_SUCCESS,
-  LOAD_INGREDIENT_FAILURE
+  LOAD_INGREDIENT_FAILURE,
+  LOAD_NEW_INGREDIENT_INFO,
+  RESET_NEW_INGREDIENT
 };
 
 const ingredientsActions = {

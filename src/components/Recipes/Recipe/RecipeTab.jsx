@@ -1,6 +1,6 @@
 import React, { Fragment } from "react";
 import styles from "./Recipe.module.scss";
-import { listify } from "../../helpers";
+import { listify } from "../../../helpers";
 
 function IngredientsList({ recipe: { ingredients } }) {
   return (
