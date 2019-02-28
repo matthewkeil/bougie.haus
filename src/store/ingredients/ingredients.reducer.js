@@ -4,9 +4,7 @@ const INIT_NEW_STATE = {
   info: {}
 }
 
-const INIT_CURRENT_STATE = {
-  ingredient: {}
-}
+const INIT_CURRENT_STATE = {}
 
 const INIT_STATE = { current: INIT_CURRENT_STATE, new: INIT_NEW_STATE, list: [] }
 

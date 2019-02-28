@@ -1,4 +1,4 @@
-import React, { Fragment, Component } from "react";
+import React, { Fragment } from "react";
 import { connect } from "react-redux";
 import { Field, reduxForm, formValueSelector } from "redux-form";
 
@@ -89,9 +89,7 @@ function mapDispatchToProps(dispatch) {
       
       const { pageid, titles, thumbnail, originalimage, extract } = info;
     
-      const normalized = { pageid, titles, thumbnail, originalimage, extract };
-
-      dispatch(ACT.ingredients.attemptCreateIngredient(normalized));
+      dispatch(ACT.ingredients.attemptCreateIngredient({ pageid, titles, thumbnail, originalimage, extract }));
     }
   };
 }

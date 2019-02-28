@@ -5,7 +5,7 @@ const JWT_SECRET = process.env.JWT_SECRET || "very_bad-JTW=$ecret";
 
 const Schema = mongoose.Schema;
 
-const UserSchema = new Schema({
+const userSchema = new Schema({
   email: {
     type: String,
     required: true,
@@ -19,7 +19,7 @@ const UserSchema = new Schema({
   tokens: [String]
 });
 
-UserSchema.pre("save", async function(next) {
+userSchema.pre("save", async function(next) {
   try {
     const user = this;
 
@@ -36,22 +36,22 @@ UserSchema.pre("save", async function(next) {
   }
 });
 
-UserSchema.methods.validatePassword = function(password) {
+userSchema.methods.validatePassword = function(password) {
   return bcrypt.compare(password, this.password);
 }
 
-UserSchema.methods.hasValidToken = function() {
+userSchema.methods.hasValidToken = function() {
   return !!this.token 
     ? jwt.verify(this.token, JWT_SECRET)
     : false;
 }
 
-UserSchema.methods.updateToken = async function() {
+userSchema.methods.updateToken = async function() {
     if (this.token) this.tokens.push(this.token);
    
     this.token = await jwt.sign({_id: this._id}, JWT_SECRET);
 }
 
-const User =  mongoose.model("User", UserSchema);
+const User =  mongoose.model("User", userSchema);
 
 module.exports = User;

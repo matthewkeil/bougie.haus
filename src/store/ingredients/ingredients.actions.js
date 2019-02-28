@@ -61,9 +61,9 @@ const loadIngredientFailure = ({ error }) => dispatch => {
   dispatch(snackbar.enqueueSnackbar({ message: error.message }));
 };
 
-const loadIngredient = ({ urlName }) => dispatch => {
+const loadIngredient = ({ canonical }) => dispatch => {
   axios
-    .get(`${API_URL}/ingredients/${urlName}`)
+    .get(`${API_URL}/ingredients/${canonical}`)
     .then(
       res => dispatch(loadIngredientSuccess({ ingredient: res.data })),
       error => dispatch(loadIngredientFailure({ error }))

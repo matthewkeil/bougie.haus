@@ -1,7 +1,7 @@
 import axios from 'axios';
-import {WIKIPEDIA_URL, } from '../helpers';
+import {WIKIPEDIA_URL} from '../helpers';
 import {snackbarActions} from './snackbar'
-import { INGREDIENTS_ACTIONS, ingredientsActions } from './ingredients/ingredients.actions';
+import { INGREDIENTS_ACTIONS } from './ingredients/ingredients.actions';
 
 const GET_WIKI_INFO = "GET_WIKI_INFO";
 

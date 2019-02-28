@@ -3,7 +3,6 @@ const router = require("express").Router();
 
 const {Recipe} = require('../models');
 
-const mock = require('../models/__mock__/recipe.mock')
 
 const handle = (fn) => async (req, res, next) => {
     try {

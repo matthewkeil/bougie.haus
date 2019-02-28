@@ -31,7 +31,7 @@ class Recipe extends Component {
   };
 
   componentDidMount() {
-    this.props.loadRecipe(this.props.match.params.urlName);
+    this.props.loadRecipe(this.props.match.params.canonical);
   }
 
   handleTabChange = (e, value) => {
@@ -71,7 +71,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    loadRecipe: urlName => dispatch(ACT.recipes.loadRecipe(urlName))
+    loadRecipe: canonical => dispatch(ACT.recipes.loadRecipe(canonical))
   };
 }
 
