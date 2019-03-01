@@ -2,8 +2,8 @@
   "name": "bougie.haus",
   "version": "0.1.0",
   "scripts": {
-    "start": "npm run client:start & npm run api:start",
-    "production": "npm run api:start",
+    "dev": "npm run client:start & npm run api:start",
+    "start": "npm run api:start",
     "client:start": "react-scripts start",
     "client:build": "react-scripts build",
     "client:deploy": "gsutil cp -r build/* gs://www.bougie.haus",
