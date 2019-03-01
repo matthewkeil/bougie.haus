@@ -39,9 +39,8 @@ export function renderTextField({
       <TextField
         onBlur={blur}
         fullWidth={fullWidth}
-        className={passedClasses.input}
+        className={passedClasses ? passedClasses.input : ''}
         label={input.name}
-        type="text"
         {...input}
         {...custom}
       />
@@ -52,12 +51,12 @@ export function renderTextField({
   );
 }
 
-export const WIKIPEDIA_URL = /^https?:\/\/(?<lang>.*).wikipedia.org\/wiki\/(?<title>.*)?$/;
+export const WIKIPEDIA_URL = /^https?:\/\/(.*).wikipedia.org\/wiki\/(.*)?$/;
 
 const testWikipediaUrl = value =>
   WIKIPEDIA_URL.test(value) ? undefined : "enter a valid wikipedia url";
 
-const required = value => (!!value && value !== "" ? undefined : "required");
+const required = value => !!value && value !== "" ? undefined : "required";
 
 export const validators = {
   testWikipediaUrl,

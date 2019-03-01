@@ -1,0 +1,26 @@
+.title {
+  line-height: 1;
+  padding-bottom: 1rem;
+}
+
+.link {
+}
+
+.iconButton {
+  width: 24px;
+  height: 24px;
+}
+
+.listItem {
+  display: flex;
+  text-align: left;
+  align-items: center;
+  padding-left: 2rem;
+  padding-right: 1rem;
+}
+
+.listContent {
+  text-decoration: none;
+  flex-grow: 1;
+  line-height: 1;
+}

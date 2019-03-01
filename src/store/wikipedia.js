@@ -10,9 +10,8 @@ const WIKI_ACTIONS = {
 };
 
 const convertToApiUrl = url => {
-  const {
-    groups: { lang, title }
-  } = WIKIPEDIA_URL.exec(url);
+  const [_, lang, title] = WIKIPEDIA_URL.exec(url);
+  
   return `https://${lang}.wikipedia.org/api/rest_v1/page/summary/${title}`;
 };
 

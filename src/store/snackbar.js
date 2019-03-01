@@ -12,7 +12,7 @@ const enqueueSnackbar = error => {
     note.message = error;
   } else if (error instanceof Error) {
 
-    if (error.response && error.response.data) {
+    if (error.response && error.response.data && error.response.data.message) {
       note.message = error.response.data.message
     } else {
       note.message = error.message;

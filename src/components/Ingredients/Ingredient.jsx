@@ -1,15 +1,14 @@
-import React, { Fragment, Component } from "react";
+import React, { Component } from "react";
 import { connect } from "react-redux";
 
-import Paper from "@material-ui/core/Paper";
-
 import { ACT } from "../../store";
+import { BaseLayout } from '../shared';
 
 import styles from "./Ingredient.module.scss";
 
 class NewIngredient extends Component {
   componentWillMount() {
-    this.props.clearIngredient()
+    this.props.clearIngredient();
   }
 
   componentDidMount() {
@@ -35,18 +34,11 @@ class NewIngredient extends Component {
       : null;
 
     return (
-      <Fragment>
-        <img
-          className={styles.logo}
-          src="/images/logo-600-600.svg"
-          alt="logo"
-        />
-        <Paper className={styles.paper} elevation={6}>
-          {!!src && <img className={styles.img} src={src} alt={display} />}
-          <h1 className={styles.title}>{display}</h1>
-          <p>{extract}</p>
-        </Paper>
-      </Fragment>
+      <BaseLayout>
+        {!!src && <img className={styles.img} src={src} alt={display} />}
+        <h1 className={styles.title}>{display}</h1>
+        <p>{extract}</p>
+      </BaseLayout>
     );
   }
 }

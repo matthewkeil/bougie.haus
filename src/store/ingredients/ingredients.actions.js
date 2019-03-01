@@ -1,7 +1,6 @@
-// import { routerActions } from "connected-react-router";
+import { routerActions } from "connected-react-router";
 
 import { snackbarActions as snackbar } from "../snackbar";
-import { routerActions } from "connected-react-router";
 
 const axios = require("axios");
 
@@ -24,21 +23,63 @@ const createIngredientSuccess = ({ ingredient }) => dispatch => {
   dispatch({
     type: RESET_NEW_INGREDIENT
   });
-  dispatch(routerActions.push('/ingredients/' + ingredient.wiki.titles.canonical))
+  dispatch(
+    routerActions.push("/ingredients/" + ingredient.wiki.titles.canonical)
+  );
 };
 
-const CREATE_INGREDIENT_FAILURE = "CREATE_INGREDIENT_FAILURE";
-const createIngredientFailure = ({ error }) => dispatch => {
+const createIngredientFailure = ({ error, redirect }) => dispatch => {
   dispatch(snackbar.enqueueSnackbar(error));
+  dispatch(routerActions.push(redirect));
 };
 
 const attemptCreateIngredient = normalized => dispatch => {
-  axios
-    .post(`${API_URL}/ingredients/new`, normalized)
-    .then(
-      res => dispatch(createIngredientSuccess({ ingredient: res.data })),
-      error => dispatch(createIngredientFailure({ error }))
-    );
+  axios.post(`${API_URL}/ingredients/new`, normalized).then(
+    res => dispatch(createIngredientSuccess({ ingredient: res.data })),
+    error =>
+      dispatch(
+        createIngredientFailure({
+          error,
+          redirect: normalized.titles.canonical
+        })
+      )
+  );
+};
+
+/**
+ *
+ * attempt create ingredient thunk set
+ * ACT.ingredients.attemptAdd({name, wikipedia, varieties})
+ *
+ * adds the ingredient and goes back to referer
+ *
+ */
+const editIngredientSuccess = ({ titles }) => dispatch => {
+  dispatch(snackbar.enqueueSnackbar(`${titles.display} was edited`));
+  dispatch(
+    routerActions.push("/ingredients/" + titles.canonical)
+  );
+};
+
+const editIngredientFailure = ({ error, canonical }) => dispatch => {
+  dispatch(snackbar.enqueueSnackbar(error));
+  dispatch(
+    routerActions.push("/ingredients/" + canonical)
+  );
+};
+
+const attemptEditIngredient = ({ingredient}) => dispatch => {
+  const {canonical, wiki: {titles, extract}} = ingredient;
+  axios.patch(`${API_URL}/ingredients/${canonical}`, {extract}).then(
+    () => dispatch(editIngredientSuccess({titles})),
+    error =>
+      dispatch(
+        editIngredientFailure({
+          error,
+          canonical
+        })
+      )
+  );
 };
 
 /**
@@ -55,42 +96,92 @@ const loadIngredientSuccess = ({ ingredient }) => ({
   ingredient
 });
 
-const LOAD_INGREDIENT_FAILURE = "LOAD_INGREDIENT_FAILURE";
 const loadIngredientFailure = ({ error }) => dispatch => {
   dispatch(snackbar.enqueueSnackbar(error));
+  dispatch(routerActions.push("/ingredients/new"));
 };
 
 const loadIngredient = ({ canonical }) => dispatch => {
   axios
     .get(`${API_URL}/ingredients/${canonical}`)
     .then(
-      res => dispatch(loadIngredientSuccess({ ingredient: res.data })),
+      result => dispatch(loadIngredientSuccess({ ingredient: result.data })),
       error => dispatch(loadIngredientFailure({ error }))
     );
 };
 
-const RESET_INGREDIENT = 'RESET_INGREDIENT';
+const RESET_INGREDIENT = "RESET_INGREDIENT";
 const resetIngredient = () => ({
   type: RESET_INGREDIENT
-})
+});
 
+/**
+ *
+ * load ingredient thunk set
+ * ACT.ingredients.loadIngredient({urlName})
+ *
+ * loads ingredient data from the urlName parameter
+ *
+ */
+const LOAD_ALL_INGREDIENTS_SUCCESS = "LOAD_ALL_INGREDIENTS_SUCCESS";
+const loadAllIngredientsSuccess = ({ ingredients }) => dispatch => {
+  dispatch(resetAllIngredients());
+  dispatch({
+    type: LOAD_ALL_INGREDIENTS_SUCCESS,
+    ingredients
+  });
+};
+
+const loadAllIngredientsFailure = ({ error }) => dispatch => {
+  dispatch(snackbar.enqueueSnackbar(error));
+  // dispatch(routerActions.pop());
+};
+
+const loadAllIngredients = () => dispatch => {
+  axios
+    .get(`${API_URL}/ingredients`)
+    .then(
+      result =>
+        dispatch(loadAllIngredientsSuccess({ ingredients: result.data })),
+      error => dispatch(loadAllIngredientsFailure({ error }))
+    );
+};
+
+const RESET_ALL_INGREDIENTS = "RESET_ALL_INGREDIENTS";
+const resetAllIngredients = () => ({
+  type: RESET_ALL_INGREDIENTS
+});
+
+const deleteIngredient = canonical => dispatch => {
+  axios
+    .delete(`${API_URL}/ingredients/${canonical}`)
+    .then(
+      result => dispatch(snackbar.enqueueSnackbar(result.data.message)),
+      err => dispatch(snackbar.enqueueSnackbar(err))
+    )
+    .finally(() => dispatch(routerActions.push("/ingredients")));
+};
 
 const LOAD_NEW_INGREDIENT_INFO = "LOAD_NEW_INGREDIENT_INFO";
 const RESET_NEW_INGREDIENT = "RESET_NEW_INGREDIENT";
 const ACTIONS = {
   CREATE_INGREDIENT_SUCCESS,
-  CREATE_INGREDIENT_FAILURE,
   LOAD_INGREDIENT_SUCCESS,
-  LOAD_INGREDIENT_FAILURE,
   LOAD_NEW_INGREDIENT_INFO,
   RESET_NEW_INGREDIENT,
-  RESET_INGREDIENT
+  RESET_INGREDIENT,
+  LOAD_ALL_INGREDIENTS_SUCCESS,
+  RESET_ALL_INGREDIENTS
 };
 
 const ingredientsActions = {
   attemptCreateIngredient,
+  attemptEditIngredient,
   loadIngredient,
-  resetIngredient
+  resetIngredient,
+  loadAllIngredients,
+  resetAllIngredients,
+  deleteIngredient
 };
 
 export { ACTIONS as INGREDIENTS_ACTIONS, ingredientsActions };

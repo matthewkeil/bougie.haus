@@ -1,7 +1,17 @@
 const router = require("express").Router();
 
-const {makeCanonical} = require('../helpers');
+const { makeCanonical } = require("../helpers");
 const { Ingredient } = require("../models");
+
+router.get("/", (req, res, next) => {
+  Ingredient.find({}).then(
+    result => {
+      if (result) return res.json(result);
+      res.status(500).json({ message: `we couldn't find any ingedients?!?!` });
+    },
+    err => next(err)
+  );
+});
 
 router.use("/new", async (req, res, next) => {
   if (!(req.body && req.body.titles))
@@ -37,13 +47,32 @@ router
     Ingredient.findOne({ canonical }).then(
       result => {
         if (result) return res.json(result);
-
-        res.status(404).json({ message: `please add ${makeCanonical(canonical)} to bougie.haus` });
+        res.status(404).json({
+          message: `please add ${makeCanonical(canonical)} to bougie.haus`
+        });
       },
       err => next(err)
     );
   })
-  .patch(async (req, res) => {})
-  .delete(async (req, res) => {});
+  .patch(async (req, res, next) => {
+    const { canonical } = req.params;
+    const {extract} = req.body;
+    Ingredient.findOneAndUpdate({ canonical }, { ["wiki.extract"]: extract }).then(
+      result => {
+        res.status(200).json({ message: `${result.wiki.titles.display} updated` });
+      },
+      err => next(err)
+  );
+  })
+  .delete(async (req, res, next) => {
+    const canonical = req.params.canonical;
+    Ingredient.findOneAndDelete({ canonical }).then(
+      ingredient =>
+        res
+          .status(200)
+          .json({ message: `${ingredient.wiki.titles.display} deleted` }),
+      err => next(err)
+    );
+  });
 
 module.exports = router;

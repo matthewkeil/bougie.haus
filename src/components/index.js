@@ -10,4 +10,6 @@ export {default as Recipe} from './Recipes/Recipe/Recipe';
 export {default as NewRecipe} from './Recipes/NewRecipe/NewRecipe'
 
 export {default as NewIngredient} from './Ingredients/NewIngredient';
+export {default as EditIngredient} from './Ingredients/EditIngredient';
 export {default as Ingredient} from './Ingredients/Ingredient';
+export {default as Ingredients} from './Ingredients/Ingredients';
