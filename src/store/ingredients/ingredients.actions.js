@@ -33,7 +33,6 @@ const createIngredientFailure = ({ error }) => dispatch => {
 };
 
 const attemptCreateIngredient = normalized => dispatch => {
-  console.log(normalized);
   axios
     .post(`${API_URL}/ingredients/new`, normalized)
     .then(
@@ -58,7 +57,7 @@ const loadIngredientSuccess = ({ ingredient }) => ({
 
 const LOAD_INGREDIENT_FAILURE = "LOAD_INGREDIENT_FAILURE";
 const loadIngredientFailure = ({ error }) => dispatch => {
-  dispatch(snackbar.enqueueSnackbar({ message: error.message }));
+  dispatch(snackbar.enqueueSnackbar(error));
 };
 
 const loadIngredient = ({ canonical }) => dispatch => {
@@ -70,23 +69,28 @@ const loadIngredient = ({ canonical }) => dispatch => {
     );
 };
 
+const RESET_INGREDIENT = 'RESET_INGREDIENT';
+const resetIngredient = () => ({
+  type: RESET_INGREDIENT
+})
 
 
 const LOAD_NEW_INGREDIENT_INFO = "LOAD_NEW_INGREDIENT_INFO";
 const RESET_NEW_INGREDIENT = "RESET_NEW_INGREDIENT";
-
 const ACTIONS = {
   CREATE_INGREDIENT_SUCCESS,
   CREATE_INGREDIENT_FAILURE,
   LOAD_INGREDIENT_SUCCESS,
   LOAD_INGREDIENT_FAILURE,
   LOAD_NEW_INGREDIENT_INFO,
-  RESET_NEW_INGREDIENT
+  RESET_NEW_INGREDIENT,
+  RESET_INGREDIENT
 };
 
 const ingredientsActions = {
   attemptCreateIngredient,
-  loadIngredient
+  loadIngredient,
+  resetIngredient
 };
 
 export { ACTIONS as INGREDIENTS_ACTIONS, ingredientsActions };

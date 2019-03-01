@@ -18,7 +18,9 @@ state = INIT_STATE,
     case ACTIONS.LOAD_NEW_INGREDIENT_INFO:
       return { ...state, new: { ...state.new, info: { ...action.info } } };
     case ACTIONS.RESET_NEW_INGREDIENT:
-      return { ...state, new: {...INIT_NEW_STATE} }
+      return { ...state, new: INIT_NEW_STATE }
+    case ACTIONS.RESET_INGREDIENT:
+      return {...state, current: INIT_CURRENT_STATE}
     default:
       return { ...state };
   }

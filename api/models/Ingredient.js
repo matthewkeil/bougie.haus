@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const canonical = require("../helpers").canonical;
+const {makeCanonical} = require("../helpers");
 
 const ingredientSchema = new mongoose.Schema({
   pageid: String,
@@ -39,7 +39,7 @@ ingredientSchema.pre("save", async function(next) {
     const ingredient = this;
 
     if (ingredient.isModified("wiki.titles.canonical")) {
-      ingredient.canonical = canonical(ingredient.wiki.titles.canonical);
+      ingredient.canonical = makeCanonical(ingredient.wiki.titles.canonical);
     }
 
     next();

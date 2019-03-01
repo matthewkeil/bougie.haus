@@ -1,4 +1,4 @@
-exports.canonical = string => {
+exports.makeCanonical = string => {
     let first = string.slice(0, 1).toUpperCase();
     let rest = string.slice(1);
   
