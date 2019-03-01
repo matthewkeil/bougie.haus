@@ -9,14 +9,14 @@
     "client:deploy": "gsutil cp -r build/* gs://www.bougie.haus",
     "client:test": "react-scripts test",
     "client:eject": "react-scripts eject",
-    "api:start": "node_modules/.bin/nodemon api"
+    "api:start": "node_modules/.bin/nodemon"
   },
   "engines": {
     "node": "8.15.0"
   },
   "nodemonConfig": {
     "delay": 1000,
-    "exec": "node api/devServer.js",
+    "exec": "node api",
     "watch": "api",
     "ignore": "node_modules"
   },
