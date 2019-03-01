@@ -4,7 +4,7 @@ import { snackbarActions as snackbar } from "../snackbar";
 
 const axios = require("axios");
 
-const API_URL = process.env.API_URL || "http://api.bougie.haus";
+const API_URL = process.env.API_URL || "https://api-bougie-haus.herokuapp.com";
 
 /**
  *
@@ -34,7 +34,14 @@ const createIngredientFailure = ({ error, redirect }) => dispatch => {
 };
 
 const attemptCreateIngredient = normalized => dispatch => {
-  axios.post(`${API_URL}/ingredients/new`, normalized).then(
+  axios({
+    url: `${API_URL}/ingredients/new`,
+    data: normalized,
+    method: 'post',
+    headers: {
+      'Access-Control-Allow-Origin': 'http://www.bougie.haus'
+    }
+  }).then(
     res => dispatch(createIngredientSuccess({ ingredient: res.data })),
     error =>
       dispatch(
@@ -70,7 +77,15 @@ const editIngredientFailure = ({ error, canonical }) => dispatch => {
 
 const attemptEditIngredient = ({ingredient}) => dispatch => {
   const {canonical, wiki: {titles, extract}} = ingredient;
-  axios.patch(`${API_URL}/ingredients/${canonical}`, {extract}).then(
+  axios({
+    url: `${API_URL}/ingredients/${canonical}`,
+    data: {extract},
+    method: 'patch',
+    headers: {
+      'Access-Control-Allow-Origin': 'http://www.bougie.haus'
+    }
+
+  }).then(
     () => dispatch(editIngredientSuccess({titles})),
     error =>
       dispatch(
@@ -102,8 +117,13 @@ const loadIngredientFailure = ({ error }) => dispatch => {
 };
 
 const loadIngredient = ({ canonical }) => dispatch => {
-  axios
-    .get(`${API_URL}/ingredients/${canonical}`)
+  axios({
+    url: `${API_URL}/ingredients/${canonical}`,
+    method: 'get',
+    headers: {
+      'Access-Control-Allow-Origin': 'http://www.bougie.haus'
+    }
+  })
     .then(
       result => dispatch(loadIngredientSuccess({ ingredient: result.data })),
       error => dispatch(loadIngredientFailure({ error }))
@@ -138,8 +158,12 @@ const loadAllIngredientsFailure = ({ error }) => dispatch => {
 };
 
 const loadAllIngredients = () => dispatch => {
-  axios
-    .get(`${API_URL}/ingredients`)
+  axios({
+    url: `${API_URL}/ingredients`,
+    headers: {
+      'Access-Control-Allow-Origin': 'http://www.bougie.haus'
+    }
+  })
     .then(
       result =>
         dispatch(loadAllIngredientsSuccess({ ingredients: result.data })),
@@ -153,8 +177,13 @@ const resetAllIngredients = () => ({
 });
 
 const deleteIngredient = canonical => dispatch => {
-  axios
-    .delete(`${API_URL}/ingredients/${canonical}`)
+  axios({
+    url: `${API_URL}/ingredients/${canonical}`,
+    method: 'delete',
+    headers: {
+      'Access-Control-Allow-Origin': 'http://www.bougie.haus'
+    }
+  })
     .then(
       result => dispatch(snackbar.enqueueSnackbar(result.data.message)),
       err => dispatch(snackbar.enqueueSnackbar(err))

@@ -19,7 +19,7 @@ api.use(helmet());
 
 api.options('*', cors());
 api.use(cors({
-    origin: PROD ? /http.*bougie\.haus$/ : /localhost/,
+    origin: PROD ? '*' : /localhost/,
     methods: ["GET", "POST", "PATCH", "DELETE", "OPTIONS"],
     credentials: true,
     allowHeaders: [

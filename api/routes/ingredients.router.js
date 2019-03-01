@@ -13,7 +13,10 @@ router.get("/", (req, res, next) => {
   );
 });
 
-router.use("/new", async (req, res, next) => {
+router.post("/new", async (req, res, next) => {
+
+  console.log(req.body);
+
   if (!(req.body && req.body.titles))
     return res.status(400).json({ message: `bad or no info sent` });
 
