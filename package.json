@@ -16,7 +16,7 @@
   },
   "nodemonConfig": {
     "delay": 1000,
-    "exec": "node api",
+    "exec": "node api/index.js",
     "watch": "api",
     "ignore": "node_modules"
   },
