@@ -9,7 +9,7 @@
     "client:deploy": "gsutil cp -r build/* gs://www.bougie.haus",
     "client:test": "react-scripts test",
     "client:eject": "react-scripts eject",
-    "api:start": "node_modules/.bin/nodemon --exec api/index.js"
+    "api:start": "node_modules/.bin/nodemon --exec node api/index.js"
   },
   "engines": {
     "node": "8.15.0"
