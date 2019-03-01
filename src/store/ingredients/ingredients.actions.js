@@ -4,7 +4,7 @@ import { snackbarActions as snackbar } from "../snackbar";
 
 const axios = require("axios");
 
-const API_URL = process.env.API_URL || "http://localhost:4000";
+const API_URL = process.env.API_URL || "http://api.bougie.haus";
 
 /**
  *
