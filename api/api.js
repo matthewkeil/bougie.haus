@@ -2,6 +2,7 @@ const helmet = require('helmet');
 const cors = require('cors');
 const compression = require('compression')
 const express = require('express');
+const bodyParser = require('body-parser');
 const session = require("express-session");
 const MongoStore = require('connect-mongo')(session);
 
@@ -43,13 +44,11 @@ api.use(session({
 
 api.use(passport.initialize());
 api.use(passport.session());
+api.use(bodyParser.json());
+api.use(bodyParser.urlencoded({ extended: false }))
 
 if (PROD) {
     api.use(compression());    
-} else {
-  const bodyParser = require('body-parser');
-  api.use(bodyParser.json());
-  api.use(bodyParser.urlencoded({ extended: false }))
 }
 
 api.use('/auth', authRouter);
