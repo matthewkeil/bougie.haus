@@ -30,7 +30,7 @@ export default class App extends Component {
       <div className={styles.container}>
         <Notifier />
         <Switch>
-          <Route path="/" exact component={Home} />
+          <Route path="/" exact component={Ingredients} />
           <Route path="/auth/register" component={Register} />
           <Route path="/auth/login" exact component={Login} />
           <Route path="/recipes/new" component={NewRecipe} />
